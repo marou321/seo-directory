@@ -39,7 +39,7 @@ function createApiRouter(db) {
   const countAllViewsStmt = db.prepare(`SELECT COUNT(*) AS count FROM analytics`);
   const countTodayViewsStmt = db.prepare(`SELECT COUNT(*) AS count FROM analytics WHERE date = ?`);
 
-  router.get('/admin/stats', requireApiKey, (_req, res) => {
+  function handleStatsRequest(_req, res) {
     try {
       const todayIso = new Date().toISOString().slice(0, 10);
 
@@ -65,7 +65,11 @@ function createApiRouter(db) {
         error: 'Internal server error while querying SQLite stats.'
       });
     }
-  });
+  }
+
+  router.get('/', requireApiKey, handleStatsRequest);
+  router.get('/stats', requireApiKey, handleStatsRequest);
+  router.get('/admin/stats', requireApiKey, handleStatsRequest);
 
   return router;
 }
