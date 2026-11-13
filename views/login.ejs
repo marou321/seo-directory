@@ -1,0 +1,86 @@
+<!-- views/login.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login | TechPay SEO Control Center</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center items-center px-4 relative overflow-hidden">
+
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-indigo-900/30 via-slate-950 to-slate-950 pointer-events-none"></div>
+
+  <div class="relative w-full max-w-md">
+    <div class="text-center mb-8">
+      <a href="/" class="inline-flex items-center gap-2.5 group">
+        <div class="w-11 h-11 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-extrabold text-xl shadow-lg shadow-indigo-600/30">
+          T
+        </div>
+        <div class="text-left">
+          <span class="block font-extrabold text-xl tracking-tight text-white">TechPay</span>
+          <span class="block text-xs font-semibold uppercase tracking-widest text-indigo-400">Admin Console</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-2xl shadow-2xl p-8">
+      <div class="mb-6">
+        <h1 class="text-2xl font-bold text-white tracking-tight">Sign in to Dashboard</h1>
+        <p class="text-sm text-slate-400 mt-1">
+          Enter your administrator password to manage programmatic SEO pages and revenue analytics.
+        </p>
+      </div>
+
+      <% if (error) { %>
+        <div class="mb-6 rounded-xl bg-rose-500/10 border border-rose-500/30 p-4 text-xs sm:text-sm text-rose-300 flex items-start gap-3">
+          <svg class="w-5 h-5 text-rose-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <span><%= error %></span>
+        </div>
+      <% } %>
+
+      <form action="/admin/login" method="POST" class="space-y-5">
+        <div>
+          <label for="password" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+            Administrator Password
+          </label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            required
+            autofocus
+            placeholder="••••••••••••"
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition text-sm"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="w-full py-3.5 px-5 rounded-xl bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-semibold text-sm shadow-lg shadow-indigo-600/25 transition flex items-center justify-center gap-2"
+        >
+          <span>Unlock Control Center</span>
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </button>
+      </form>
+
+      <div class="mt-6 pt-6 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500">
+        <span>Protected by <code class="text-slate-400 font-mono">ADMIN_PASSWORD</code></span>
+        <a href="/" class="text-indigo-400 hover:text-indigo-300 font-medium transition">&larr; Public Directory</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

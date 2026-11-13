@@ -1,0 +1,416 @@
+<!-- views/admin.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Command Center | TechPay Programmatic SEO</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- Top Navigation Bar -->
+  <header class="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="/admin" class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-extrabold text-lg shadow-md shadow-indigo-600/30">
+            T
+          </div>
+          <div>
+            <span class="font-extrabold text-base tracking-tight text-white">TechPay</span>
+            <span class="text-xs font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 ml-1.5">
+              SaaS Admin
+            </span>
+          </div>
+        </a>
+      </div>
+
+      <div class="flex items-center gap-3 sm:gap-4">
+        <a
+          href="/"
+          target="_blank"
+          class="text-xs sm:text-sm font-medium text-slate-300 hover:text-white px-3 py-2 rounded-lg hover:bg-slate-800 transition inline-flex items-center gap-1.5"
+        >
+          <span>Live Directory</span>
+          <svg class="w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+
+        <form action="/admin/logout" method="POST" class="inline">
+          <button
+            type="submit"
+            class="text-xs sm:text-sm font-semibold px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-rose-600/90 text-slate-200 hover:text-white border border-slate-700 hover:border-rose-500 transition"
+          >
+            Sign Out
+          </button>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    <!-- Header & Pipeline Action Bar -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/60 border border-slate-800 rounded-2xl p-6">
+      <div>
+        <div class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-indigo-400 mb-1">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          Real-Time Telemetry &amp; Monetization
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+          Programmatic SEO Command Center
+        </h1>
+        <p class="text-sm text-slate-400 mt-1">
+          Monitor organic page views, RPM ad revenue projections, and trigger automated OpenAI database enrichment.
+        </p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+        <button
+          id="runPipelineBtn"
+          type="button"
+          onclick="triggerPipeline()"
+          <%= isPipelineRunning ? 'disabled' : '' %>
+          class="px-5 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 disabled:text-slate-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/25 transition inline-flex items-center justify-center gap-2.5"
+        >
+          <svg id="pipelineSpinner" class="w-4 h-4 animate-spin <%= isPipelineRunning ? '' : 'hidden' %>" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+          </svg>
+          <svg id="pipelineIcon" class="w-4 h-4 <%= isPipelineRunning ? 'hidden' : '' %>" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          <span id="pipelineBtnText"><%= isPipelineRunning ? 'Running AI Pipeline...' : 'Run AI Pipeline' %></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Server-Rendered or Dynamic Alert Banner -->
+    <% if (flashMessage) { %>
+      <div class="rounded-2xl border p-4 text-sm flex items-center justify-between <%= flashStatus === 'error' ? 'bg-rose-500/10 border-rose-500/30 text-rose-200' : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-200' %>">
+        <span><%= flashMessage %></span>
+        <a href="/admin" class="text-xs font-semibold underline ml-4">Dismiss</a>
+      </div>
+    <% } %>
+
+    <div id="pipelineAlertBox" class="hidden rounded-2xl border p-5 text-sm">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <p id="pipelineAlertTitle" class="font-bold text-base"></p>
+          <p id="pipelineAlertMessage" class="mt-1 text-slate-300"></p>
+          <pre id="pipelineAlertLogs" class="mt-3 hidden p-3 rounded-xl bg-slate-950/90 border border-slate-800 text-xs font-mono text-slate-300 overflow-x-auto max-h-48"></pre>
+        </div>
+        <button type="button" onclick="document.getElementById('pipelineAlertBox').classList.add('hidden')" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white">
+          Close
+        </button>
+      </div>
+    </div>
+
+    <!-- Primary KPI Cards -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <!-- Total Generated Pages -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Pages Generated</span>
+          <span class="w-9 h-9 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </span>
+        </div>
+        <div class="mt-4">
+          <p class="text-3xl font-extrabold text-white"><%= stats.totalPages.toLocaleString() %></p>
+          <p class="text-xs text-slate-400 mt-1">Indexed in <code class="text-indigo-300 font-mono">data.db</code></p>
+        </div>
+      </div>
+
+      <!-- Today's Page Views -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Page Views (Today)</span>
+          <span class="w-9 h-9 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          </span>
+        </div>
+        <div class="mt-4">
+          <p class="text-3xl font-extrabold text-white"><%= stats.todayViews.toLocaleString() %></p>
+          <p class="text-xs text-emerald-400 mt-1">+$<%= stats.estimatedEarningsToday %> est. today</p>
+        </div>
+      </div>
+
+      <!-- All-Time Page Views -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Views (All-Time)</span>
+          <span class="w-9 h-9 rounded-xl bg-violet-500/10 border border-violet-500/20 text-violet-400 flex items-center justify-center">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
+          </span>
+        </div>
+        <div class="mt-4">
+          <p class="text-3xl font-extrabold text-white"><%= stats.totalViews.toLocaleString() %></p>
+          <p class="text-xs text-slate-400 mt-1"><%= stats.uniqueVisitors.toLocaleString() %> unique visitor IPs</p>
+        </div>
+      </div>
+
+      <!-- Estimated Earnings -->
+      <div class="bg-gradient-to-br from-emerald-950/70 via-slate-900 to-slate-900 border border-emerald-500/30 rounded-2xl p-6 flex flex-col justify-between">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold uppercase tracking-wider text-emerald-300">Estimated Earnings</span>
+          <span class="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 flex items-center justify-center font-bold text-sm">
+            $
+          </span>
+        </div>
+        <div class="mt-4">
+          <p class="text-3xl font-extrabold text-emerald-400">$<%= stats.estimatedEarningsAllTime %></p>
+          <p class="text-xs text-slate-400 mt-1">
+            Formula: <code class="text-slate-300">(Views / 1000) &times; $<%= stats.rpm %> RPM</code>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Middle Grid: Top Performing SEO Pages & 7-Day Traffic Breakdown -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Top Performing SEO Pages Table -->
+      <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+        <div class="px-6 py-5 border-b border-slate-800 flex items-center justify-between">
+          <div>
+            <h2 class="text-base font-bold text-white">Top Performing Programmatic Pages</h2>
+            <p class="text-xs text-slate-400 mt-0.5">Ranked by organic page views and estimated RPM contribution</p>
+          </div>
+          <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-slate-800 text-slate-300">Top 10</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-slate-800 text-[11px] font-semibold uppercase tracking-wider text-slate-400 bg-slate-950/40">
+                <th class="py-3.5 px-6">Route / Page Title</th>
+                <th class="py-3.5 px-4 text-right">Views</th>
+                <th class="py-3.5 px-4 text-right">Unique IPs</th>
+                <th class="py-3.5 px-6 text-right">Est. Revenue</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/70 text-sm">
+              <% if (topPages.length === 0) { %>
+                <tr>
+                  <td colspan="4" class="py-8 px-6 text-center text-slate-500">
+                    No page views recorded yet. Visit public pages to populate analytics.
+                  </td>
+                </tr>
+              <% } else { %>
+                <% topPages.forEach(function(item) { %>
+                  <tr class="hover:bg-slate-800/40 transition">
+                    <td class="py-3.5 px-6">
+                      <a href="<%= item.path %>" target="_blank" class="font-mono text-xs text-indigo-400 hover:underline block">
+                        <%= item.path %>
+                      </a>
+                      <span class="text-xs text-slate-300 line-clamp-1">
+                        <%= item.title || 'Directory Landing / System Route' %>
+                      </span>
+                    </td>
+                    <td class="py-3.5 px-4 text-right font-semibold text-white">
+                      <%= item.views.toLocaleString() %>
+                    </td>
+                    <td class="py-3.5 px-4 text-right text-slate-400">
+                      <%= item.unique_ips.toLocaleString() %>
+                    </td>
+                    <td class="py-3.5 px-6 text-right font-mono text-emerald-400 font-semibold">
+                      $<%= item.estimated_revenue %>
+                    </td>
+                  </tr>
+                <% }); %>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Last 7 Days Traffic & Recently Generated Pages -->
+      <div class="space-y-6">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+          <h2 class="text-base font-bold text-white">Daily Traffic (Last 7 Days)</h2>
+          <p class="text-xs text-slate-400 mt-0.5">Aggregated by UTC date</p>
+
+          <div class="mt-5 space-y-3">
+            <% if (dailyTraffic.length === 0) { %>
+              <p class="text-xs text-slate-500 py-4 text-center">No daily traffic logged yet.</p>
+            <% } else { %>
+              <% 
+                const maxViews = Math.max.apply(null, dailyTraffic.map(function(d) { return d.views; }).concat([1]));
+                dailyTraffic.forEach(function(day) {
+                  const pct = Math.max(8, Math.round((day.views / maxViews) * 100));
+              %>
+                <div>
+                  <div class="flex items-center justify-between text-xs mb-1">
+                    <span class="font-mono text-slate-300"><%= day.date %></span>
+                    <span class="font-semibold text-white"><%= day.views %> views</span>
+                  </div>
+                  <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+                    <div class="h-full rounded-full bg-indigo-500" style="width: <%= pct %>%"></div>
+                  </div>
+                </div>
+              <% }); %>
+            <% } %>
+          </div>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-base font-bold text-white">Latest Enriched Pages</h2>
+            <span class="text-xs text-slate-400"><%= recentPages.length %> shown</span>
+          </div>
+          <div class="space-y-3 max-h-64 overflow-y-auto pr-1">
+            <% if (recentPages.length === 0) { %>
+              <p class="text-xs text-slate-500 text-center py-4">
+                No pages in <code class="font-mono">pages</code> table yet. Click "Run AI Pipeline" above.
+              </p>
+            <% } else { %>
+              <% recentPages.forEach(function(p) { %>
+                <a
+                  href="/<%= p.slug %>"
+                  target="_blank"
+                  class="block p-3 rounded-xl bg-slate-950/60 hover:bg-slate-800/70 border border-slate-800/80 transition"
+                >
+                  <p class="text-xs font-semibold text-white line-clamp-1"><%= p.title %></p>
+                  <div class="flex items-center justify-between mt-1 text-[11px] text-slate-400">
+                    <span class="font-mono text-indigo-400 truncate max-w-[180px]">/<%= p.slug %></span>
+                    <span><%= p.created_at ? p.created_at.split(' ')[0] : '' %></span>
+                  </div>
+                </a>
+              <% }); %>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Real-Time Visitor Log Stream -->
+    <section class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+      <div class="px-6 py-5 border-b border-slate-800 flex items-center justify-between">
+        <div>
+          <h2 class="text-base font-bold text-white">Recent Visitor Telemetry Stream</h2>
+          <p class="text-xs text-slate-400 mt-0.5">Live hits captured by the custom SQLite analytics middleware (excluding <code class="font-mono">/admin/*</code> &amp; assets)</p>
+        </div>
+        <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+          Live SQLite Log
+        </span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b border-slate-800 text-[11px] font-semibold uppercase tracking-wider text-slate-400 bg-slate-950/40">
+              <th class="py-3 px-6">Hit ID</th>
+              <th class="py-3 px-4">Requested Path</th>
+              <th class="py-3 px-4">Visitor IP Address</th>
+              <th class="py-3 px-4">Date</th>
+              <th class="py-3 px-6 text-right">Timestamp (UTC)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800/70 text-xs sm:text-sm">
+            <% if (recentLogs.length === 0) { %>
+              <tr>
+                <td colspan="5" class="py-8 px-6 text-center text-slate-500">
+                  No visitor hits logged yet.
+                </td>
+              </tr>
+            <% } else { %>
+              <% recentLogs.forEach(function(log) { %>
+                <tr class="hover:bg-slate-800/40 transition">
+                  <td class="py-3 px-6 font-mono text-xs text-slate-400">#<%= log.id %></td>
+                  <td class="py-3 px-4 font-mono text-xs text-indigo-400">
+                    <a href="<%= log.path %>" target="_blank" class="hover:underline"><%= log.path %></a>
+                  </td>
+                  <td class="py-3 px-4 font-mono text-xs text-slate-300"><%= log.ip_address %></td>
+                  <td class="py-3 px-4 text-xs text-slate-400"><%= log.date %></td>
+                  <td class="py-3 px-6 text-right font-mono text-xs text-slate-400"><%= log.created_at %></td>
+                </tr>
+              <% }); %>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    async function triggerPipeline() {
+      const btn = document.getElementById('runPipelineBtn');
+      const spinner = document.getElementById('pipelineSpinner');
+      const icon = document.getElementById('pipelineIcon');
+      const btnText = document.getElementById('pipelineBtnText');
+      const alertBox = document.getElementById('pipelineAlertBox');
+      const alertTitle = document.getElementById('pipelineAlertTitle');
+      const alertMessage = document.getElementById('pipelineAlertMessage');
+      const alertLogs = document.getElementById('pipelineAlertLogs');
+
+      btn.disabled = true;
+      spinner.classList.remove('hidden');
+      icon.classList.add('hidden');
+      btnText.textContent = 'Running AI Pipeline...';
+      alertBox.classList.add('hidden');
+
+      try {
+        const response = await fetch('/admin/run-pipeline', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        });
+
+        const data = await response.json();
+        alertBox.classList.remove('hidden', 'bg-rose-500/10', 'border-rose-500/30', 'bg-emerald-500/10', 'border-emerald-500/30');
+
+        if (response.ok && data.success) {
+          alertBox.classList.add('bg-emerald-500/10', 'border-emerald-500/30');
+          alertTitle.className = 'font-bold text-base text-emerald-300';
+          alertTitle.textContent = 'AI Pipeline Completed Successfully';
+          alertMessage.textContent = data.message || 'Database updated.';
+          if (data.stdout) {
+            alertLogs.textContent = data.stdout;
+            alertLogs.classList.remove('hidden');
+          }
+          setTimeout(() => window.location.reload(), 2500);
+        } else {
+          alertBox.classList.add('bg-rose-500/10', 'border-rose-500/30');
+          alertTitle.className = 'font-bold text-base text-rose-300';
+          alertTitle.textContent = 'Pipeline Execution Error';
+          alertMessage.textContent = data.message || 'Failed to execute pipeline.py';
+          if (data.details || data.stdout) {
+            alertLogs.textContent = [data.details, data.stdout].filter(Boolean).join('\n\n');
+            alertLogs.classList.remove('hidden');
+          }
+        }
+      } catch (err) {
+        alertBox.classList.remove('hidden');
+        alertBox.classList.add('bg-rose-500/10', 'border-rose-500/30');
+        alertTitle.className = 'font-bold text-base text-rose-300';
+        alertTitle.textContent = 'Network or Server Error';
+        alertMessage.textContent = err.message || 'Failed to communicate with /admin/run-pipeline.';
+      } finally {
+        btn.disabled = false;
+        spinner.classList.add('hidden');
+        icon.classList.remove('hidden');
+        btnText.textContent = 'Run AI Pipeline';
+      }
+    }
+  </script>
+</body>
+</html>
