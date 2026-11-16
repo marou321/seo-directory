@@ -1,9 +1,9 @@
 # .github/workflows/automate.yml
-name: Automated Programmatic SEO Data Pipeline
+name: Weekly Programmatic SEO Data Pipeline
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 3 * * 1'
   workflow_dispatch:
 
 permissions:
@@ -44,26 +44,27 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run OpenAI Enrichment Pipeline
+      - name: Run OpenAI Enrichment & High-Volume Trend Pipeline
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: gpt-4o-mini
           DB_PATH: data.db
         run: |
+          python generate_pages.py
           python pipeline.py
 
       - name: Checkpoint SQLite WAL into main data.db file
         run: |
           python -c "import sqlite3; conn = sqlite3.connect('data.db'); conn.execute('PRAGMA wal_checkpoint(TRUNCATE);'); conn.execute('PRAGMA journal_mode=DELETE;'); conn.close()"
 
-      - name: Commit and push updated data.db to main branch
+      - name: Commit and push updated data.db and generated templates to main branch
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data.db
+          git add data.db views/generated/
           if git diff --staged --quiet; then
-            echo "No changes detected in data.db."
+            echo "No changes detected in data.db or views/generated/."
           else
-            git commit -m "chore(data): automated weekly programmatic SEO database update [skip ci]"
+            git commit -m "chore(data): automated programmatic SEO database & trend pages update [skip ci]"
             git push origin HEAD:main
           fi

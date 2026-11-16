@@ -1,114 +1,114 @@
 <!-- views/about.ejs -->
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Us | TechPay Index — Tech Compensation & Market Directory</title>
-  <meta name="description" content="Learn how TechPay Index collects, analyzes, and publishes localized technology compensation benchmarks, cost-of-living insights, and career guides." />
+  <title>About Us | TechPay Directory — Architecture &amp; Compensation Intelligence</title>
+  <meta name="description" content="Learn how TechPay Directory researches, curates, and publishes technology architecture guides, AI workflows, and localized compensation benchmarks." />
   <link rel="canonical" href="<%= siteUrl %>/about" />
-  <meta property="og:title" content="About Us | TechPay Index" />
-  <meta property="og:description" content="Discover our methodology for transparent, data-driven technology salary benchmarks across major US tech hubs." />
+  <meta property="og:title" content="About Us | TechPay Directory" />
+  <meta property="og:description" content="Discover our methodology for transparent, data-driven technology benchmarks and career guides." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="<%= siteUrl %>/about" />
+  <!-- Google AdSense Auto-Ads Verification Script -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4588627708948117" crossorigin="anonymous"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     body { font-family: 'Inter', sans-serif; }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.68);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col selection:bg-indigo-600 selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white relative overflow-x-hidden">
 
-  <header class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-30">
+  <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+    <div class="absolute -top-32 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/3 -right-32 w-96 h-96 bg-sky-500/15 rounded-full blur-3xl"></div>
+  </div>
+
+  <header class="bg-slate-950/75 backdrop-blur-xl border-b border-slate-800/80 sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-2.5 group shrink-0">
-        <div class="w-9 h-9 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-extrabold text-lg shadow-sm group-hover:bg-indigo-700 transition">
+      <a href="/" class="flex items-center gap-3 group shrink-0">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 via-sky-500 to-emerald-400 flex items-center justify-center text-slate-950 font-extrabold text-lg shadow-lg shadow-indigo-500/25">
           T
         </div>
         <div>
-          <span class="font-extrabold text-lg tracking-tight text-slate-900">TechPay</span>
-          <span class="hidden sm:inline-block text-xs font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 ml-1">Directory</span>
+          <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-indigo-300 bg-clip-text text-transparent">TechPay</span>
+          <span class="hidden sm:inline-block text-[11px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 ml-1.5">
+            Directory
+          </span>
         </div>
       </a>
-      <nav class="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm font-medium text-slate-600">
-        <a href="/" class="hover:text-indigo-600 transition">Home</a>
-        <a href="/about" class="text-indigo-600 font-semibold">About Us</a>
-        <a href="/contact" class="hover:text-indigo-600 transition">Contact</a>
-        <a href="/privacy" class="hover:text-indigo-600 transition">Privacy Policy</a>
+      <nav class="flex flex-wrap items-center gap-4 sm:gap-7 text-xs sm:text-sm font-medium text-slate-300">
+        <a href="/" class="hover:text-white transition">Home</a>
+        <a href="/about" class="text-white font-semibold">About Us</a>
+        <a href="/contact" class="hover:text-white transition">Contact</a>
+        <a href="/privacy" class="hover:text-white transition">Privacy Policy</a>
       </nav>
     </div>
   </header>
 
-  <section class="bg-slate-900 text-white py-14 sm:py-20 border-b border-slate-800">
+  <section class="py-14 sm:py-20 border-b border-slate-800/80">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 mb-4">
         Our Mission &amp; Methodology
       </span>
-      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
-        About TechPay Compensation Directory
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+        About TechPay Directory
       </h1>
       <p class="mt-4 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-        Empowering software engineers, data scientists, cloud architects, and hiring managers with transparent, localized compensation intelligence.
+        Delivering transparent, data-driven engineering benchmarks, AI automation guides, and localized compensation insights across global technology hubs.
       </p>
     </div>
   </section>
 
   <main class="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
-    <article class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-10 space-y-6 text-slate-700 leading-relaxed">
+    <article class="glass-card rounded-2xl p-6 sm:p-10 space-y-6 text-slate-300 leading-relaxed">
       <div>
-        <h2 class="text-xl sm:text-2xl font-bold text-slate-900">What We Offer</h2>
+        <h2 class="text-xl sm:text-2xl font-bold text-white">What We Offer</h2>
         <p class="mt-3">
-          <strong>TechPay Index</strong> is an independent, data-driven compensation and career intelligence directory built specifically for technology professionals. Navigating salary negotiations, relocation decisions, and equity packages can be challenging when compensation data is fragmented or outdated. Our platform bridges this gap by combining structured regional salary benchmarks with clear, role-specific market analysis across major technology hubs.
-        </p>
-        <p class="mt-3">
-          Every report in our directory provides a detailed breakdown of base salary percentiles (25th, Median, and 75th percentiles), year-over-year compensation growth rates, local cost-of-living adjustments, and frequently asked career questions tailored to each specific role and city.
+          <strong>TechPay Directory</strong> is an independent technical research and compensation intelligence platform built for software engineers, data scientists, DevOps architects, and engineering leaders. We publish over 100 structured, in-depth guides covering modern software architecture, AI/LLM production workflows, fintech infrastructure, and localized salary percentiles.
         </p>
       </div>
 
-      <div class="border-t border-slate-100 pt-6">
-        <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Our Data &amp; Editorial Methodology</h2>
+      <div class="border-t border-slate-800 pt-6">
+        <h2 class="text-xl sm:text-2xl font-bold text-white">Our Research &amp; Editorial Standards</h2>
         <p class="mt-3">
-          Our research pipeline aggregates publicly reported compensation filings, regional cost-of-living indices, and employer salary disclosures. We normalize base compensation across metropolitan tiers—ranging from Tier-1 global hubs like San Francisco, New York City, and Seattle to high-growth hubs like Austin and Denver—and enrich each report with structured insights covering:
+          Every report in our directory is structured around measurable industry benchmarks, real-world engineering trade-offs, and verified regional market multipliers:
         </p>
-        <ul class="mt-4 space-y-2.5 list-disc list-inside text-slate-700">
-          <li><strong>Percentile Benchmarks:</strong> Clear salary bands from mid-level (25th percentile) to senior/lead specialists (75th percentile).</li>
-          <li><strong>Total Compensation Context:</strong> Guidance on annual performance bonuses, restricted stock units (RSUs), and early-stage equity grants.</li>
-          <li><strong>Purchasing Power &amp; Cost of Living:</strong> How state taxes, housing costs, and hybrid work policies affect real take-home pay.</li>
-          <li><strong>Actionable FAQs:</strong> Practical answers to common negotiation and career advancement questions for each locality.</li>
+        <ul class="mt-4 space-y-2.5 list-disc list-inside text-slate-300">
+          <li><strong>Compensation Percentiles:</strong> Clear 25th, 50th (median), and 75th percentile salary bands adjusted for local cost-of-living dynamics.</li>
+          <li><strong>Architecture &amp; AI Workflows:</strong> Actionable implementation blueprints for RAG pipelines, PostgreSQL tuning, Kubernetes FinOps, and CI/CD automation.</li>
+          <li><strong>Structured Schema Metadata:</strong> Validated JSON-LD (<code class="text-indigo-300">Article</code> and <code class="text-indigo-300">FAQPage</code>) on every guide for maximum clarity.</li>
         </ul>
       </div>
 
-      <div class="border-t border-slate-100 pt-6">
-        <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Editorial Independence &amp; Transparency</h2>
+      <div class="border-t border-slate-800 pt-6">
+        <h2 class="text-xl sm:text-2xl font-bold text-white">Editorial Independence &amp; Transparency</h2>
         <p class="mt-3">
-          TechPay Index is committed to accuracy, transparency, and reader trust. Our salary guides are continuously reviewed and updated on an automated schedule to reflect current hiring conditions and macroeconomic shifts. To keep our research freely accessible to all job seekers and students without paywalls, our platform is supported by non-intrusive display advertising and partnerships governed by our <a href="/privacy" class="text-indigo-600 font-semibold hover:underline">Privacy Policy</a>.
+          To keep all reports free and accessible without paywalls, TechPay Directory is supported by compliant display advertising governed by our <a href="/privacy" class="text-indigo-400 font-semibold hover:underline">Privacy Policy</a>. If you have questions or want to request a new benchmark topic, reach out via our <a href="/contact" class="text-indigo-400 font-semibold hover:underline">Contact Us</a> page.
         </p>
-      </div>
-
-      <div class="border-t border-slate-100 pt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-50 rounded-xl p-6">
-        <div>
-          <h3 class="text-base font-bold text-slate-900">Have questions or feedback on a salary report?</h3>
-          <p class="text-sm text-slate-600 mt-1">Reach out to our editorial and data research team anytime.</p>
-        </div>
-        <a href="/contact" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition shrink-0 text-center">
-          Contact Us &rarr;
-        </a>
       </div>
     </article>
   </main>
 
-  <footer class="bg-white border-t border-slate-200 mt-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+  <footer class="border-t border-slate-800/80 bg-slate-950/90 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
       <p>&copy; <%= new Date().getFullYear() %> TechPay Programmatic SEO Directory. All rights reserved.</p>
-      <div class="flex flex-wrap items-center gap-5">
-        <a href="/" class="hover:text-slate-900 transition">Home</a>
-        <a href="/about" class="hover:text-slate-900 transition">About Us</a>
-        <a href="/contact" class="hover:text-slate-900 transition">Contact Us</a>
-        <a href="/privacy" class="hover:text-slate-900 transition">Privacy Policy</a>
-        <a href="/sitemap.xml" class="hover:text-slate-900 transition">Sitemap</a>
+      <div class="flex flex-wrap items-center gap-6">
+        <a href="/" class="hover:text-white transition">Home</a>
+        <a href="/about" class="hover:text-white transition">About Us</a>
+        <a href="/contact" class="hover:text-white transition">Contact Us</a>
+        <a href="/privacy" class="hover:text-white transition">Privacy Policy</a>
+        <a href="/sitemap.xml" class="hover:text-white transition">XML Sitemap</a>
       </div>
     </div>
   </footer>

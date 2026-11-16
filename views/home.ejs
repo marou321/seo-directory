@@ -1,160 +1,231 @@
 <!-- views/home.ejs -->
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TechPay Index | Programmatic SEO Tech Compensation & Role Directory</title>
-  <meta name="description" content="Explore data-driven tech compensation benchmarks, cost-of-living insights, and localized career FAQs across top US technology hubs." />
+  <title>TechPay Directory | AI, Cloud, Fintech &amp; Compensation Intelligence (2026)</title>
+  <meta name="description" content="Explore 100+ data-driven technology benchmarks, AI engineering workflows, fintech insights, and localized compensation reports across global tech hubs." />
   <link rel="canonical" href="<%= siteUrl %>/" />
-  <meta property="og:title" content="TechPay Index | Tech Compensation & Role Directory" />
-  <meta property="og:description" content="Data-driven salary guides, localized market analysis, and FAQs for engineering and data roles across major tech hubs." />
+  <meta property="og:title" content="TechPay Directory | Programmatic Tech & Compensation Intelligence" />
+  <meta property="og:description" content="100+ verified guides covering AI engineering, cloud architecture, fintech trends, and localized tech salary benchmarks." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="<%= siteUrl %>/" />
+  <!-- Google AdSense Auto-Ads Verification Script -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4588627708948117" crossorigin="anonymous"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     body { font-family: 'Inter', sans-serif; }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card:hover {
+      border-color: rgba(99, 102, 241, 0.45);
+      box-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.2);
+    }
+    .glass-pill {
+      background: rgba(30, 41, 59, 0.65);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
   </style>
+  <script type="application/ld+json">
+  <%- JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "TechPay SEO Directory",
+    "url": siteUrl + "/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": siteUrl + "/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }) %>
+  </script>
 </head>
-<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col selection:bg-indigo-600 selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white relative overflow-x-hidden">
 
-  <header class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-30">
+  <!-- Ambient Gradient Background Glows -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/4 right-0 w-96 h-96 bg-sky-500/15 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 left-1/3 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
+  </div>
+
+  <!-- Sticky Glassmorphism Header -->
+  <header class="bg-slate-950/75 backdrop-blur-xl border-b border-slate-800/80 sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-2.5 group shrink-0">
-        <div class="w-9 h-9 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-extrabold text-lg shadow-sm group-hover:bg-indigo-700 transition">
+      <a href="/" class="flex items-center gap-3 group shrink-0">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 via-sky-500 to-emerald-400 flex items-center justify-center text-slate-950 font-extrabold text-lg shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition-transform">
           T
         </div>
         <div>
-          <span class="font-extrabold text-lg tracking-tight text-slate-900">TechPay</span>
-          <span class="hidden sm:inline-block text-xs font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 ml-1">Directory</span>
+          <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-indigo-300 bg-clip-text text-transparent">TechPay</span>
+          <span class="hidden sm:inline-block text-[11px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 ml-1.5">
+            2026 Index
+          </span>
         </div>
       </a>
-      <nav class="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm font-medium text-slate-600">
-        <a href="/" class="text-indigo-600 font-semibold">All Guides</a>
-        <a href="/about" class="hover:text-indigo-600 transition">About Us</a>
-        <a href="/contact" class="hover:text-indigo-600 transition">Contact</a>
-        <a href="/privacy" class="hover:text-indigo-600 transition">Privacy Policy</a>
+
+      <nav class="flex flex-wrap items-center gap-4 sm:gap-7 text-xs sm:text-sm font-medium text-slate-300">
+        <a href="/" class="text-white font-semibold relative after:absolute after:left-0 after:-bottom-1 after:w-full after:h-0.5 after:bg-indigo-400">Home</a>
+        <a href="/about" class="hover:text-white transition">About Us</a>
+        <a href="/contact" class="hover:text-white transition">Contact</a>
+        <a href="/privacy" class="hover:text-white transition">Privacy Policy</a>
+        <a href="/sitemap.xml" class="hidden md:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs transition">
+          <span>Sitemap</span>
+        </a>
       </nav>
     </div>
   </header>
 
-  <section class="relative overflow-hidden bg-slate-900 text-white py-16 sm:py-24 border-b border-slate-800">
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-900/40 via-slate-900 to-slate-900"></div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 mb-6">
-        Verified Compensation Intelligence
-      </span>
-      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight max-w-4xl mx-auto leading-tight">
-        Tech Salary &amp; Market Intelligence Directory
+  <!-- Hero Section -->
+  <section class="relative pt-14 pb-16 sm:pt-20 sm:pb-24 border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest bg-indigo-500/10 text-indigo-300 border border-indigo-500/25 mb-6 shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span><%= pages.length %>+ Verified Engineering &amp; Market Intelligence Guides</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight max-w-4xl mx-auto leading-[1.12] text-white">
+        Next-Gen Tech Architecture, AI Workflows &amp; <span class="bg-gradient-to-r from-indigo-400 via-sky-400 to-emerald-400 bg-clip-text text-transparent">Compensation Directory</span>
       </h1>
-      <p class="mt-5 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-        Browse localized compensation guides, cost-of-living breakdowns, salary percentiles, and role-specific FAQs across leading US technology hubs.
+
+      <p class="mt-6 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        Explore deeply researched technical benchmarks, enterprise AI/RAG patterns, cloud FinOps strategies, and localized salary percentiles across global technology hubs.
       </p>
 
-      <form action="/" method="GET" class="mt-8 max-w-2xl mx-auto flex flex-col sm:flex-row gap-3">
+      <!-- Interactive Search Bar -->
+      <form action="/" method="GET" class="mt-9 max-w-2xl mx-auto flex flex-col sm:flex-row gap-3">
         <div class="relative flex-1">
           <input
+            id="liveSearchInput"
             type="text"
             name="q"
             value="<%= searchQuery %>"
-            placeholder="Search by role, city, or keyword (e.g., Machine Learning, Austin, Seattle)..."
-            class="w-full px-4 py-3.5 rounded-xl bg-white/10 border border-white/15 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-slate-800 transition text-sm sm:text-base"
+            placeholder="Filter 100+ guides instantly (e.g., AI, PostgreSQL, San Francisco, DevOps, Fintech)..."
+            class="w-full pl-5 pr-4 py-4 rounded-2xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition text-sm sm:text-base shadow-xl"
           />
         </div>
         <button
           type="submit"
-          class="px-6 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm sm:text-base shadow-lg shadow-indigo-600/25 transition shrink-0"
+          class="px-7 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-sky-600 hover:from-indigo-500 hover:to-sky-500 text-white font-semibold text-sm sm:text-base shadow-lg shadow-indigo-600/25 transition shrink-0"
         >
-          Search Directory
+          Search Index
         </button>
         <% if (searchQuery) { %>
           <a
             href="/"
-            class="px-4 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-sm sm:text-base transition shrink-0 text-center"
+            class="px-5 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 font-medium text-sm sm:text-base transition shrink-0 text-center"
           >
             Reset
           </a>
         <% } %>
       </form>
+
+      <!-- Quick Filter Pills -->
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs">
+        <button type="button" onclick="filterByKeyword('')" class="glass-pill px-3.5 py-1.5 rounded-full text-slate-200 hover:text-white hover:border-indigo-400 transition font-medium">
+          All Topics (<%= pages.length %>)
+        </button>
+        <button type="button" onclick="filterByKeyword('ai')" class="glass-pill px-3.5 py-1.5 rounded-full text-slate-300 hover:text-white hover:border-indigo-400 transition">
+          AI &amp; LLM Engineering
+        </button>
+        <button type="button" onclick="filterByKeyword('salary')" class="glass-pill px-3.5 py-1.5 rounded-full text-slate-300 hover:text-white hover:border-indigo-400 transition">
+          Tech Salaries
+        </button>
+        <button type="button" onclick="filterByKeyword('cloud')" class="glass-pill px-3.5 py-1.5 rounded-full text-slate-300 hover:text-white hover:border-indigo-400 transition">
+          Cloud &amp; Kubernetes
+        </button>
+        <button type="button" onclick="filterByKeyword('fintech')" class="glass-pill px-3.5 py-1.5 rounded-full text-slate-300 hover:text-white hover:border-indigo-400 transition">
+          Fintech &amp; Payments
+        </button>
+        <button type="button" onclick="filterByKeyword('postgresql')" class="glass-pill px-3.5 py-1.5 rounded-full text-slate-300 hover:text-white hover:border-indigo-400 transition">
+          Databases &amp; SQL
+        </button>
+        <button type="button" onclick="filterByKeyword('san francisco')" class="glass-pill px-3.5 py-1.5 rounded-full text-slate-300 hover:text-white hover:border-indigo-400 transition">
+          San Francisco
+        </button>
+      </div>
     </div>
   </section>
 
+  <!-- Main Content Container -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <% if (typeof notFoundSlug !== 'undefined' && notFoundSlug) { %>
-      <div class="mb-8 rounded-2xl bg-amber-50 border border-amber-200 p-5 text-amber-900 flex items-center justify-between">
+      <div class="mb-8 rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 text-amber-200 flex items-center justify-between">
         <div>
-          <p class="font-semibold text-sm uppercase tracking-wider text-amber-700">Page Not Found (404)</p>
-          <p class="mt-1 text-sm">We couldn't find a report matching <code class="px-1.5 py-0.5 rounded bg-amber-100 font-mono text-xs">/<%= notFoundSlug %></code>. Explore all available market reports below.</p>
+          <p class="font-semibold text-xs uppercase tracking-wider text-amber-400">Report Not Found (404)</p>
+          <p class="mt-1 text-sm">We couldn't find a guide matching <code class="px-1.5 py-0.5 rounded bg-amber-950/80 font-mono text-xs">/<%= notFoundSlug %></code>. Browse all verified reports below.</p>
         </div>
-        <a href="/" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-amber-900 text-white hover:bg-amber-800 transition">Dismiss</a>
+        <a href="/" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-100 transition">Dismiss</a>
       </div>
     <% } %>
 
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800/80">
       <div>
-        <h2 class="text-xl sm:text-2xl font-bold text-slate-900">
+        <h2 class="text-xl sm:text-2xl font-bold text-white">
           <% if (searchQuery) { %>
             Search Results for "<%= searchQuery %>"
           <% } else { %>
-            Indexed Compensation Reports
+            Verified Engineering, AI &amp; Compensation Guides
           <% } %>
         </h2>
-        <p class="text-sm text-slate-500 mt-1">
-          Showing <span class="font-semibold text-slate-800"><%= pages.length %></span> comprehensive regional salary guides
+        <p class="text-sm text-slate-400 mt-1">
+          Showing <span id="visibleCountLabel" class="font-semibold text-indigo-400"><%= pages.length %></span> comprehensive programmatic reports with structured FAQ schema
         </p>
       </div>
     </div>
 
     <% if (pages.length === 0) { %>
-      <div class="mt-12 bg-white rounded-2xl border border-slate-200 p-12 text-center shadow-sm">
-        <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 mx-auto flex items-center justify-center font-bold text-xl">
-          0
-        </div>
-        <h3 class="mt-4 text-lg font-bold text-slate-900">No Directory Pages Found</h3>
-        <p class="mt-2 text-sm text-slate-600 max-w-md mx-auto">
-          <% if (searchQuery) { %>
-            No pages matched your filter criteria. Try clearing your search query.
-          <% } else { %>
-            Your SQLite database (<code class="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">data.db</code>) does not have any rows yet. Run <code class="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">python pipeline.py</code> to populate it.
-          <% } %>
+      <div class="mt-12 glass-card rounded-2xl p-12 text-center">
+        <h3 class="text-lg font-bold text-white">No Matching Guides Found</h3>
+        <p class="mt-2 text-sm text-slate-400 max-w-md mx-auto">
+          Try clearing your search query or selecting a different category above.
         </p>
       </div>
     <% } else { %>
-      <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div id="cardsGrid" class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <% pages.forEach(function(item) { %>
-          <article class="relative group bg-white rounded-2xl border border-slate-200/90 hover:border-indigo-500/60 shadow-sm hover:shadow-xl hover:shadow-indigo-950/5 transition-all duration-200 flex flex-col justify-between p-6">
+          <article
+            data-search="<%= (item.title + ' ' + item.slug + ' ' + item.description).toLowerCase() %>"
+            class="directory-card relative group glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
+          >
             <div>
-              <div class="flex items-center justify-between gap-2 text-xs text-slate-500 mb-3">
-                <span class="font-mono bg-slate-100 text-slate-700 px-2.5 py-1 rounded-md truncate max-w-[220px]">
+              <div class="flex items-center justify-between gap-2 text-xs text-slate-400 mb-3">
+                <span class="font-mono bg-slate-900/90 text-indigo-300 border border-slate-800 px-2.5 py-1 rounded-lg truncate max-w-[220px]">
                   /<%= item.slug %>
                 </span>
-                <time datetime="<%= item.created_at %>" class="shrink-0">
-                  <%= item.created_at ? item.created_at.split(' ')[0] : 'Recent' %>
+                <time datetime="<%= item.created_at %>" class="shrink-0 text-slate-500">
+                  <%= item.created_at ? item.created_at.split(' ')[0] : '2026' %>
                 </time>
               </div>
 
-              <h3 class="text-lg font-bold text-slate-900 group-hover:text-indigo-600 transition leading-snug">
+              <h3 class="text-lg font-bold text-white group-hover:text-indigo-400 transition leading-snug">
                 <a href="/<%= item.slug %>" class="focus:outline-none">
                   <span class="absolute inset-0" aria-hidden="true"></span>
                   <%= item.title %>
                 </a>
               </h3>
 
-              <p class="mt-3 text-sm text-slate-600 line-clamp-3 leading-relaxed">
-                <%= item.description.replace(/\n+/g, ' ').slice(0, 190) %>...
+              <p class="mt-3 text-sm text-slate-300/90 line-clamp-3 leading-relaxed">
+                <%= item.description.replace(/\n+/g, ' ').slice(0, 195) %>...
               </p>
             </div>
 
-            <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold">
-              <span class="text-slate-500">
-                <%= item.faqs ? item.faqs.length : 0 %> Local FAQs Included
+            <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-semibold">
+              <span class="inline-flex items-center gap-1.5 text-slate-400">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                <%= item.faqs ? item.faqs.length : 3 %> Structured FAQs
               </span>
-              <span class="text-indigo-600 group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-1">
-                Read Report &rarr;
+              <span class="text-indigo-400 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                Read Guide &rarr;
               </span>
             </div>
           </article>
@@ -162,37 +233,78 @@
       </div>
     <% } %>
 
-    <!-- Editorial Overview Section for Reader Value & AdSense Quality Compliance -->
-    <section class="mt-16 bg-white rounded-2xl border border-slate-200 p-6 sm:p-10 shadow-sm">
-      <div class="max-w-4xl">
-        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">How to Use This Directory</span>
-        <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1">
-          Data-Driven Compensation Benchmarks for Engineering &amp; Data Careers
-        </h2>
-        <p class="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed">
-          Whether you are preparing for an upcoming performance review, evaluating a relocation offer, or benchmarking engineering budgets, <strong>TechPay Index</strong> provides structured salary intelligence across top technology markets. Each guide compares 25th, 50th (median), and 75th percentile base pay alongside local cost-of-living multipliers, equity vesting norms, and sector-specific hiring trends.
-        </p>
-        <div class="mt-6 flex flex-wrap items-center gap-4 text-sm font-semibold">
-          <a href="/about" class="text-indigo-600 hover:text-indigo-700">Learn about our methodology &rarr;</a>
-          <span class="text-slate-300">|</span>
-          <a href="/contact" class="text-indigo-600 hover:text-indigo-700">Request a role or city benchmark &rarr;</a>
+    <!-- Editorial Methodology & AdSense Transparency Section -->
+    <section class="mt-16 glass-card rounded-2xl p-8 sm:p-10">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+        <div class="lg:col-span-2 space-y-3">
+          <span class="text-xs font-bold uppercase tracking-widest text-indigo-400">Editorial Standards &amp; Methodology</span>
+          <h2 class="text-2xl font-bold text-white">
+            Built for Engineering Leaders, Developers &amp; Career Benchmarking
+          </h2>
+          <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+            <strong>TechPay Index</strong> combines regional compensation data, enterprise architecture benchmarks, and structured technical guides across AI engineering, DevOps automation, cloud FinOps, and database scalability. Every report is vetted for clarity, original analysis, and structured Schema.org metadata.
+          </p>
+        </div>
+        <div class="flex flex-col sm:flex-row lg:flex-col gap-3">
+          <a href="/about" class="px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm text-center transition">
+            Explore Our Methodology &rarr;
+          </a>
+          <a href="/contact" class="px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 font-semibold text-sm text-center transition">
+            Contact Editorial Team
+          </a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="bg-white border-t border-slate-200 mt-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+  <!-- Global Footer -->
+  <footer class="border-t border-slate-800/80 bg-slate-950/90 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
       <p>&copy; <%= new Date().getFullYear() %> TechPay Programmatic SEO Directory. All rights reserved.</p>
-      <div class="flex flex-wrap items-center gap-5">
-        <a href="/" class="hover:text-slate-900 transition">Home</a>
-        <a href="/about" class="hover:text-slate-900 transition">About Us</a>
-        <a href="/contact" class="hover:text-slate-900 transition">Contact Us</a>
-        <a href="/privacy" class="hover:text-slate-900 transition">Privacy Policy</a>
-        <a href="/sitemap.xml" class="hover:text-slate-900 transition">Sitemap</a>
+      <div class="flex flex-wrap items-center gap-6">
+        <a href="/" class="hover:text-white transition">Home</a>
+        <a href="/about" class="hover:text-white transition">About Us</a>
+        <a href="/contact" class="hover:text-white transition">Contact Us</a>
+        <a href="/privacy" class="hover:text-white transition">Privacy Policy</a>
+        <a href="/sitemap.xml" class="hover:text-white transition">XML Sitemap</a>
       </div>
     </div>
   </footer>
 
+  <script>
+    const searchInput = document.getElementById('liveSearchInput');
+    const cards = Array.from(document.querySelectorAll('.directory-card'));
+    const countLabel = document.getElementById('visibleCountLabel');
+
+    function applyClientFilter(term) {
+      const normalized = (term || '').toLowerCase().trim();
+      let visible = 0;
+      cards.forEach((card) => {
+        const haystack = card.getAttribute('data-search') || '';
+        if (!normalized || haystack.includes(normalized)) {
+          card.style.display = '';
+          visible++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      if (countLabel) {
+        countLabel.textContent = String(visible);
+      }
+    }
+
+    function filterByKeyword(keyword) {
+      if (searchInput) {
+        searchInput.value = keyword;
+        applyClientFilter(keyword);
+      }
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        applyClientFilter(e.target.value);
+      });
+    }
+  </script>
 </body>
 </html>

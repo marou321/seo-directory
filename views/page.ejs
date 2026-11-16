@@ -1,129 +1,177 @@
 <!-- views/page.ejs -->
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><%= page.title %></title>
+  <title><%= page.title %> | TechPay Directory</title>
   <meta name="description" content="<%= page.description.replace(/\n+/g, ' ').slice(0, 158) %>" />
   <link rel="canonical" href="<%= siteUrl %>/<%= page.slug %>" />
   <meta property="og:title" content="<%= page.title %>" />
   <meta property="og:description" content="<%= page.description.replace(/\n+/g, ' ').slice(0, 158) %>" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="<%= siteUrl %>/<%= page.slug %>" />
+  <!-- Google AdSense Auto-Ads Verification Script -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4588627708948117" crossorigin="anonymous"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     body { font-family: 'Inter', sans-serif; }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.68);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
   </style>
-  <% if (page.faqs && page.faqs.length > 0) { %>
   <script type="application/ld+json">
   <%- JSON.stringify({
     "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": page.faqs.map(function(f) {
-      return {
-        "@type": "Question",
-        "name": f.question,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": f.answer
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": page.title,
+        "description": page.description.replace(/\n+/g, ' ').slice(0, 160),
+        "datePublished": page.created_at || new Date().toISOString(),
+        "dateModified": page.created_at || new Date().toISOString(),
+        "mainEntityOfPage": siteUrl + "/" + page.slug,
+        "author": {
+          "@type": "Organization",
+          "name": "TechPay SEO Directory"
         }
-      };
-    })
+      },
+      ...(page.faqs && page.faqs.length > 0 ? [{
+        "@type": "FAQPage",
+        "mainEntity": page.faqs.map(function(f) {
+          return {
+            "@type": "Question",
+            "name": f.question,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": f.answer
+            }
+          };
+        })
+      }] : [])
+    ]
   }) %>
   </script>
-  <% } %>
 </head>
-<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col selection:bg-indigo-600 selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white relative overflow-x-hidden">
 
-  <header class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-30">
+  <!-- Ambient Glows -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+    <div class="absolute -top-32 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/3 -right-32 w-96 h-96 bg-sky-500/15 rounded-full blur-3xl"></div>
+  </div>
+
+  <!-- Header Navigation -->
+  <header class="bg-slate-950/75 backdrop-blur-xl border-b border-slate-800/80 sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-2.5 group shrink-0">
-        <div class="w-9 h-9 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-extrabold text-lg shadow-sm group-hover:bg-indigo-700 transition">
+      <a href="/" class="flex items-center gap-3 group shrink-0">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 via-sky-500 to-emerald-400 flex items-center justify-center text-slate-950 font-extrabold text-lg shadow-lg shadow-indigo-500/25">
           T
         </div>
         <div>
-          <span class="font-extrabold text-lg tracking-tight text-slate-900">TechPay</span>
-          <span class="hidden sm:inline-block text-xs font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 ml-1">Directory</span>
+          <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-indigo-300 bg-clip-text text-transparent">TechPay</span>
+          <span class="hidden sm:inline-block text-[11px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 ml-1.5">
+            Directory
+          </span>
         </div>
       </a>
-      <nav class="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm font-medium text-slate-600">
-        <a href="/" class="hover:text-indigo-600 transition">All Guides</a>
-        <a href="/about" class="hover:text-indigo-600 transition">About Us</a>
-        <a href="/contact" class="hover:text-indigo-600 transition">Contact</a>
-        <a href="/privacy" class="hover:text-indigo-600 transition">Privacy Policy</a>
+      <nav class="flex flex-wrap items-center gap-4 sm:gap-7 text-xs sm:text-sm font-medium text-slate-300">
+        <a href="/" class="hover:text-white transition">All Guides</a>
+        <a href="/about" class="hover:text-white transition">About Us</a>
+        <a href="/contact" class="hover:text-white transition">Contact</a>
+        <a href="/privacy" class="hover:text-white transition">Privacy Policy</a>
       </nav>
     </div>
   </header>
 
-  <div class="bg-slate-900 text-white border-b border-slate-800 py-12 sm:py-16">
+  <!-- Hero Banner -->
+  <div class="border-b border-slate-800/80 py-12 sm:py-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <nav aria-label="Breadcrumb" class="text-xs font-medium text-slate-400 flex items-center gap-2 mb-5">
         <a href="/" class="hover:text-white transition">Directory Home</a>
         <span>/</span>
-        <span class="text-indigo-300 font-mono truncate"><%= page.slug %></span>
+        <span class="text-indigo-400 font-mono truncate"><%= page.slug %></span>
       </nav>
 
-      <h1 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+      <h1 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-white">
         <%= page.title %>
       </h1>
 
-      <div class="mt-6 flex flex-wrap items-center gap-4 text-xs sm:text-sm text-slate-300">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-medium">
-          Verified Market Report
-        </span>
-        <span>
-          Last Updated: <time datetime="<%= page.created_at %>" class="font-semibold text-white"><%= page.created_at %></time>
-        </span>
-        <span>&bull;</span>
-        <span>Report ID: #<%= page.id %></span>
+      <div class="mt-6 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex flex-wrap items-center gap-3 text-xs sm:text-sm text-slate-300">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-semibold">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            Verified 2026 Report
+          </span>
+          <span>
+            Updated: <time datetime="<%= page.created_at %>" class="font-semibold text-white"><%= page.created_at ? page.created_at.split(' ')[0] : '2026' %></time>
+          </span>
+          <span>&bull;</span>
+          <span class="font-mono text-xs text-slate-400">ID #<%= page.id %></span>
+        </div>
+
+        <button
+          type="button"
+          onclick="navigator.clipboard.writeText(window.location.href); this.textContent = '✓ Link Copied';"
+          class="text-xs font-semibold px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-indigo-300 border border-slate-700 transition"
+        >
+          Share Report Link
+        </button>
       </div>
     </div>
   </div>
 
-  <main class="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <article class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-10">
-      <h2 class="text-lg sm:text-xl font-bold text-slate-900 pb-4 border-b border-slate-100">
-        Comprehensive Compensation &amp; Market Overview
+  <!-- Main Content -->
+  <main class="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
+    <article class="glass-card rounded-2xl shadow-2xl p-6 sm:p-10">
+      <h2 class="text-lg sm:text-xl font-bold text-white pb-4 border-b border-slate-800">
+        Executive Summary &amp; In-Depth Analysis
       </h2>
 
-      <div class="mt-6 space-y-5 text-slate-700 text-base sm:text-lg leading-relaxed">
+      <div class="mt-6 space-y-5 text-slate-200 text-base sm:text-lg leading-relaxed">
         <% page.description.split(/\n\s*\n/).forEach(function(paragraph) { %>
           <% if (paragraph.trim()) { %>
             <p><%= paragraph.trim() %></p>
           <% } %>
         <% }); %>
       </div>
+
+      <div class="mt-8 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs text-slate-400">
+        <span>Published by TechPay Editorial &amp; Data Research Team</span>
+        <a href="/about" class="text-indigo-400 hover:text-indigo-300 font-semibold">Read our data methodology &rarr;</a>
+      </div>
     </article>
 
     <% if (page.faqs && page.faqs.length > 0) { %>
-      <section class="mt-10 bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-10">
-        <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+      <section class="glass-card rounded-2xl shadow-2xl p-6 sm:p-10">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-800">
           <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Structured FAQ Schema</span>
-            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-400">Structured FAQ Schema</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-white mt-1">
               Frequently Asked Questions
             </h2>
           </div>
-          <span class="text-xs font-semibold px-3 py-1 rounded-full bg-slate-100 text-slate-700">
-            <%= page.faqs.length %> Questions
+          <span class="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">
+            <%= page.faqs.length %> Verified Answers
           </span>
         </div>
 
-        <div class="mt-6 divide-y divide-slate-200">
+        <div class="mt-6 divide-y divide-slate-800/80">
           <% page.faqs.forEach(function(faq, index) { %>
             <div class="py-5 first:pt-0 last:pb-0">
-              <h3 class="text-base sm:text-lg font-bold text-slate-900 flex items-start gap-3">
-                <span class="w-6 h-6 rounded-full bg-indigo-50 text-indigo-600 text-xs font-extrabold flex items-center justify-center shrink-0 mt-0.5">
+              <h3 class="text-base sm:text-lg font-bold text-white flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-extrabold flex items-center justify-center shrink-0 mt-0.5">
                   Q<%= index + 1 %>
                 </span>
                 <span><%= faq.question %></span>
               </h3>
-              <p class="mt-2.5 pl-9 text-sm sm:text-base text-slate-600 leading-relaxed">
+              <p class="mt-2.5 pl-9 text-sm sm:text-base text-slate-300 leading-relaxed">
                 <%= faq.answer %>
               </p>
             </div>
@@ -133,25 +181,25 @@
     <% } %>
 
     <% if (relatedPages && relatedPages.length > 0) { %>
-      <section class="mt-12">
+      <section class="pt-4">
         <div class="flex items-center justify-between mb-6">
-          <h2 class="text-xl font-bold text-slate-900">Related Compensation Guides</h2>
-          <a href="/" class="text-sm font-semibold text-indigo-600 hover:text-indigo-700">View all &rarr;</a>
+          <h2 class="text-xl font-bold text-white">Related Guides &amp; Benchmarks</h2>
+          <a href="/" class="text-sm font-semibold text-indigo-400 hover:text-indigo-300">Browse all &rarr;</a>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <% relatedPages.forEach(function(rel) { %>
             <a
               href="/<%= rel.slug %>"
-              class="group bg-white rounded-xl border border-slate-200 p-5 hover:border-indigo-500/60 hover:shadow-md transition flex flex-col justify-between"
+              class="group glass-card rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between"
             >
               <div>
-                <span class="text-xs font-mono text-slate-400">/<%= rel.slug %></span>
-                <h3 class="mt-1 text-base font-bold text-slate-900 group-hover:text-indigo-600 transition">
+                <span class="text-xs font-mono text-indigo-400">/<%= rel.slug %></span>
+                <h3 class="mt-1.5 text-base font-bold text-white group-hover:text-indigo-300 transition">
                   <%= rel.title %>
                 </h3>
               </div>
-              <span class="mt-4 text-xs font-semibold text-indigo-600 inline-flex items-center gap-1">
-                Explore benchmark &rarr;
+              <span class="mt-4 text-xs font-semibold text-indigo-400 inline-flex items-center gap-1">
+                Read guide &rarr;
               </span>
             </a>
           <% }); %>
@@ -160,15 +208,15 @@
     <% } %>
   </main>
 
-  <footer class="bg-white border-t border-slate-200 mt-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+  <footer class="border-t border-slate-800/80 bg-slate-950/90 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
       <p>&copy; <%= new Date().getFullYear() %> TechPay Programmatic SEO Directory. All rights reserved.</p>
-      <div class="flex flex-wrap items-center gap-5">
-        <a href="/" class="hover:text-slate-900 transition">Home</a>
-        <a href="/about" class="hover:text-slate-900 transition">About Us</a>
-        <a href="/contact" class="hover:text-slate-900 transition">Contact Us</a>
-        <a href="/privacy" class="hover:text-slate-900 transition">Privacy Policy</a>
-        <a href="/sitemap.xml" class="hover:text-slate-900 transition">Sitemap</a>
+      <div class="flex flex-wrap items-center gap-6">
+        <a href="/" class="hover:text-white transition">Home</a>
+        <a href="/about" class="hover:text-white transition">About Us</a>
+        <a href="/contact" class="hover:text-white transition">Contact Us</a>
+        <a href="/privacy" class="hover:text-white transition">Privacy Policy</a>
+        <a href="/sitemap.xml" class="hover:text-white transition">XML Sitemap</a>
       </div>
     </div>
   </footer>

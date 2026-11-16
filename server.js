@@ -222,6 +222,12 @@ app.get('/:slug', (req, res) => {
     const row = selectPageBySlugStmt.get(slug);
 
     if (!row) {
+      const fs = require('fs');
+      const generatedTemplatePath = path.join(__dirname, 'views', 'generated', `${slug}.ejs`);
+      if (fs.existsSync(generatedTemplatePath)) {
+        return res.render(`generated/${slug}`, { siteUrl: SITE_URL });
+      }
+
       return res.status(404).render('home', {
         pages: selectAllPagesStmt.all().map((r) => ({ ...r, faqs: parseFaqs(r.faqs) })),
         searchQuery: '',

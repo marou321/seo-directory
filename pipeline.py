@@ -275,9 +275,15 @@ def main() -> None:
         cursor = conn.cursor()
         cursor.execute("SELECT COUNT(*) FROM pages;")
         count = cursor.fetchone()[0]
-        print(f"Pipeline completed successfully. Total rows in '{DB_PATH}': {count}")
+        print(f"Salary benchmark pipeline completed. Rows in '{DB_PATH}': {count}")
     finally:
         conn.close()
+
+    try:
+        import generate_pages
+        generate_pages.main()
+    except Exception as gen_err:
+        print(f"Warning: generate_pages synchronization encountered an issue: {gen_err}")
 
 
 if __name__ == "__main__":
