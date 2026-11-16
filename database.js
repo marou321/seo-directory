@@ -1,13 +1,13 @@
 // database.js
+const fs = require('fs');
 const path = require('path');
 
 const DB_PATH = path.resolve(__dirname, process.env.DB_PATH || 'data.db');
 
-function createDatabaseConnection(filePath) {
+function openRawDatabase(filePath) {
   try {
     const BetterSqlite3 = require('better-sqlite3');
-    const db = new BetterSqlite3(filePath);
-    return db;
+    return new BetterSqlite3(filePath);
   } catch (_err) {
     const { DatabaseSync } = require('node:sqlite');
     const db = new DatabaseSync(filePath);
@@ -18,10 +18,32 @@ function createDatabaseConnection(filePath) {
   }
 }
 
+function createDatabaseConnection(filePath) {
+  try {
+    const db = openRawDatabase(filePath);
+    db.exec('PRAGMA quick_check;');
+    return db;
+  } catch (err) {
+    const walPath = `${filePath}-wal`;
+    const shmPath = `${filePath}-shm`;
+    if (fs.existsSync(walPath) || fs.existsSync(shmPath)) {
+      console.warn('Detected stale SQLite WAL/SHM files causing mismatch. Cleaning up and reopening...');
+      try {
+        if (fs.existsSync(walPath)) fs.unlinkSync(walPath);
+        if (fs.existsSync(shmPath)) fs.unlinkSync(shmPath);
+      } catch (_cleanupErr) {
+        // Ignore cleanup errors
+      }
+      return openRawDatabase(filePath);
+    }
+    throw err;
+  }
+}
+
 function initializeDatabase() {
   const db = createDatabaseConnection(DB_PATH);
 
-  db.exec('PRAGMA journal_mode = WAL;');
+  db.exec('PRAGMA journal_mode = DELETE;');
   db.exec('PRAGMA synchronous = NORMAL;');
   db.exec('PRAGMA foreign_keys = ON;');
 
