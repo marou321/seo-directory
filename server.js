@@ -146,6 +146,21 @@ app.get('/sitemap.xml', (_req, res) => {
     <loc>${SITE_URL}/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>${SITE_URL}/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>${SITE_URL}/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>${SITE_URL}/privacy</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>${urls}
 </urlset>`;
 
@@ -180,6 +195,25 @@ app.get('/', (req, res) => {
     console.error('Error rendering home route:', error);
     res.status(500).send('Internal Server Error');
   }
+});
+
+app.get('/about', (_req, res) => {
+  res.render('about', { siteUrl: SITE_URL });
+});
+
+app.get('/contact', (req, res) => {
+  res.render('contact', {
+    siteUrl: SITE_URL,
+    submitted: req.query.submitted === '1'
+  });
+});
+
+app.post('/contact', (_req, res) => {
+  res.redirect('/contact?submitted=1');
+});
+
+app.get('/privacy', (_req, res) => {
+  res.render('privacy', { siteUrl: SITE_URL });
 });
 
 app.get('/:slug', (req, res) => {

@@ -1,0 +1,125 @@
+<!-- views/privacy.ejs -->
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy | TechPay Index — Tech Compensation Directory</title>
+  <meta name="description" content="Read the official Privacy Policy for TechPay Index, including disclosures on cookies, log files, Google AdSense, DoubleClick DART cookies, and user data rights." />
+  <link rel="canonical" href="<%= siteUrl %>/privacy" />
+  <meta property="og:title" content="Privacy Policy | TechPay Index" />
+  <meta property="og:description" content="Privacy Policy, Cookie Disclosures, and Google AdSense transparency guidelines for TechPay Index." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="<%= siteUrl %>/privacy" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4588627708948117" crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col selection:bg-indigo-600 selection:text-white">
+
+  <header class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2.5 group shrink-0">
+        <div class="w-9 h-9 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-extrabold text-lg shadow-sm group-hover:bg-indigo-700 transition">
+          T
+        </div>
+        <div>
+          <span class="font-extrabold text-lg tracking-tight text-slate-900">TechPay</span>
+          <span class="hidden sm:inline-block text-xs font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 ml-1">Directory</span>
+        </div>
+      </a>
+      <nav class="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm font-medium text-slate-600">
+        <a href="/" class="hover:text-indigo-600 transition">Home</a>
+        <a href="/about" class="hover:text-indigo-600 transition">About Us</a>
+        <a href="/contact" class="hover:text-indigo-600 transition">Contact</a>
+        <a href="/privacy" class="text-indigo-600 font-semibold">Privacy Policy</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="bg-slate-900 text-white py-14 sm:py-20 border-b border-slate-800">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 mb-4">
+        Legal &amp; AdSense Compliance
+      </span>
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+        Privacy Policy
+      </h1>
+      <p class="mt-4 text-sm sm:text-base text-slate-300 max-w-2xl mx-auto">
+        Last Updated: <%= new Date().toISOString().slice(0, 10) %>
+      </p>
+    </div>
+  </section>
+
+  <main class="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <article class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-10 space-y-6 text-slate-700 text-sm sm:text-base leading-relaxed">
+      <div>
+        <h2 class="text-xl font-bold text-slate-900">1. Overview</h2>
+        <p class="mt-2">
+          At <strong>TechPay Index</strong> (accessible from <code class="text-xs bg-slate-100 px-1.5 py-0.5 rounded"><%= siteUrl %></code>), one of our main priorities is the privacy of our visitors. This Privacy Policy document outlines the types of information that are collected and recorded by TechPay Index and how we use it. By using our website, you hereby consent to our Privacy Policy and agree to its terms.
+        </p>
+      </div>
+
+      <div class="border-t border-slate-100 pt-6">
+        <h2 class="text-xl font-bold text-slate-900">2. Log Files &amp; First-Party Analytics</h2>
+        <p class="mt-2">
+          TechPay Index follows a standard procedure of using log files and lightweight page-view telemetry. These files log visitors when they visit public pages on the website. The information collected by log files includes internet protocol (IP) addresses, requested page paths, date and time stamps, and referring pages. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing traffic trends, administering the site, and improving the quality of our compensation reports.
+        </p>
+      </div>
+
+      <div class="border-t border-slate-100 pt-6">
+        <h2 class="text-xl font-bold text-slate-900">3. Google AdSense &amp; DoubleClick DART Cookie</h2>
+        <p class="mt-2">
+          We use <strong>Google AdSense</strong> to serve advertisements when you visit our website. Google, as a third-party vendor, uses cookies (including the DoubleClick DART cookie) to serve ads to our site visitors based upon their visit to <code class="text-xs bg-slate-100 px-1.5 py-0.5 rounded"><%= siteUrl %></code> and other sites on the internet.
+        </p>
+        <ul class="mt-3 space-y-2 list-disc list-inside">
+          <li>Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to your website or other websites.</li>
+          <li>Google's use of advertising cookies enables it and its partners to serve ads to your users based on their visit to your sites and/or other sites on the Internet.</li>
+          <li>Users may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" class="text-indigo-600 font-semibold hover:underline">Google Ads Settings</a> or <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer" class="text-indigo-600 font-semibold hover:underline">Google Privacy &amp; Terms — Advertising</a>.</li>
+          <li>Alternatively, you can opt out of a third-party vendor's use of cookies for personalized advertising by visiting <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" class="text-indigo-600 font-semibold hover:underline">www.aboutads.info</a>.</li>
+        </ul>
+      </div>
+
+      <div class="border-t border-slate-100 pt-6">
+        <h2 class="text-xl font-bold text-slate-900">4. Cookies and Web Beacons</h2>
+        <p class="mt-2">
+          Like any other website, TechPay Index uses cookies to store information including visitors' preferences and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information. You can choose to disable cookies through your individual browser options.
+        </p>
+      </div>
+
+      <div class="border-t border-slate-100 pt-6">
+        <h2 class="text-xl font-bold text-slate-900">5. GDPR &amp; CCPA Data Protection Rights</h2>
+        <p class="mt-2">
+          Depending on your location, you have rights under the General Data Protection Regulation (GDPR) and the California Consumer Privacy Act (CCPA), including the right to request access to, rectification of, or erasure of your personal data, and the right to opt out of personalized advertising cookies. If you would like to exercise any of these rights, please contact us through our <a href="/contact" class="text-indigo-600 font-semibold hover:underline">Contact Us</a> page.
+        </p>
+      </div>
+
+      <div class="border-t border-slate-100 pt-6">
+        <h2 class="text-xl font-bold text-slate-900">6. Contact Information</h2>
+        <p class="mt-2">
+          If you have additional questions or require more information about our Privacy Policy, please contact us anytime via our <a href="/contact" class="text-indigo-600 font-semibold hover:underline">Contact Us</a> page or by email at <a href="mailto:contact@techpay-directory.com" class="text-indigo-600 font-semibold hover:underline">contact@techpay-directory.com</a>.
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="bg-white border-t border-slate-200 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <p>&copy; <%= new Date().getFullYear() %> TechPay Programmatic SEO Directory. All rights reserved.</p>
+      <div class="flex flex-wrap items-center gap-5">
+        <a href="/" class="hover:text-slate-900 transition">Home</a>
+        <a href="/about" class="hover:text-slate-900 transition">About Us</a>
+        <a href="/contact" class="hover:text-slate-900 transition">Contact Us</a>
+        <a href="/privacy" class="hover:text-slate-900 transition">Privacy Policy</a>
+        <a href="/sitemap.xml" class="hover:text-slate-900 transition">Sitemap</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
