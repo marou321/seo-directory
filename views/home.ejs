@@ -14,25 +14,102 @@
   <!-- Google AdSense Auto-Ads Verification Script -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4588627708948117" crossorigin="anonymous"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] }
+        }
+      }
+    };
+    (function() {
+      const saved = localStorage.getItem('techpay_theme');
+      if (saved === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --mouse-x: 50vw;
+      --mouse-y: 30vh;
+    }
     body { font-family: 'Inter', sans-serif; }
-    .glass-card {
-      background: rgba(15, 23, 42, 0.65);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+
+    /* Global Mouse-Tracking Ambient Spotlight */
+    #cursor-spotlight {
+      background: radial-gradient(
+        650px circle at var(--mouse-x) var(--mouse-y),
+        rgba(99, 102, 241, 0.14),
+        rgba(14, 165, 233, 0.06) 40%,
+        transparent 70%
+      );
+    }
+    html:not(.dark) #cursor-spotlight {
+      background: radial-gradient(
+        650px circle at var(--mouse-x) var(--mouse-y),
+        rgba(99, 102, 241, 0.11),
+        rgba(14, 165, 233, 0.05) 40%,
+        transparent 70%
+      );
+    }
+
+    /* Interactive Spotlight Cards (Quartz Light & Obsidian Dark) */
+    .spotlight-card {
+      position: relative;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.06);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease, box-shadow 0.28s ease, background-color 0.3s ease;
+    }
+    .dark .spotlight-card {
+      background: rgba(15, 23, 42, 0.62);
       border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 15px 35px -12px rgba(0, 0, 0, 0.45);
     }
-    .glass-card:hover {
-      border-color: rgba(99, 102, 241, 0.45);
-      box-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.2);
+    .spotlight-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(
+        420px circle at var(--card-x, -500px) var(--card-y, -500px),
+        rgba(99, 102, 241, 0.18),
+        rgba(56, 189, 248, 0.06) 45%,
+        transparent 75%
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 0;
     }
-    .glass-pill {
-      background: rgba(30, 41, 59, 0.65);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+    .spotlight-card:hover::before {
+      opacity: 1;
+    }
+    .spotlight-card:hover {
+      border-color: rgba(99, 102, 241, 0.48);
+      box-shadow: 0 22px 45px -15px rgba(79, 70, 229, 0.22);
+    }
+    .spotlight-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+    }
+    .animate-float {
+      animation: floatSlow 4.5s ease-in-out infinite;
     }
   </style>
   <script type="application/ld+json">
@@ -49,55 +126,79 @@
   }) %>
   </script>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white relative overflow-x-hidden">
+<body class="bg-slate-50 text-slate-900 dark:bg-[#050814] dark:text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white relative overflow-x-hidden transition-colors duration-300">
 
-  <!-- Ambient Gradient Background Glows -->
+  <!-- Dynamic Mouse-Tracking Spotlight Overlay -->
+  <div id="cursor-spotlight" class="fixed inset-0 pointer-events-none z-0 transition-opacity duration-300"></div>
+
+  <!-- Ambient Decorative Orbs -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
-    <div class="absolute -top-40 -left-40 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl"></div>
-    <div class="absolute top-1/4 right-0 w-96 h-96 bg-sky-500/15 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-0 left-1/3 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-indigo-500/15 dark:bg-indigo-600/20 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/4 right-0 w-96 h-96 bg-sky-400/15 dark:bg-sky-500/15 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 left-1/3 w-96 h-96 bg-emerald-400/10 dark:bg-emerald-500/10 rounded-full blur-3xl"></div>
   </div>
 
-  <!-- Sticky Glassmorphism Header -->
-  <header class="bg-slate-950/75 backdrop-blur-xl border-b border-slate-800/80 sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+  <!-- Sticky Glassmorphism Navigation Header -->
+  <header class="bg-white/80 dark:bg-[#050814]/80 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 sticky top-0 z-40 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
       <a href="/" class="flex items-center gap-3 group shrink-0">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 via-sky-500 to-emerald-400 flex items-center justify-center text-slate-950 font-extrabold text-lg shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition-transform">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 via-sky-500 to-emerald-400 flex items-center justify-center text-white font-extrabold text-lg shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition-transform">
           T
         </div>
         <div>
-          <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-indigo-300 bg-clip-text text-transparent">TechPay</span>
-          <span class="hidden sm:inline-block text-[11px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 ml-1.5">
+          <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-slate-900 via-indigo-800 to-indigo-600 dark:from-white dark:via-slate-100 dark:to-indigo-300 bg-clip-text text-transparent">TechPay</span>
+          <span class="hidden sm:inline-block text-[11px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-600 dark:bg-indigo-500/15 dark:text-indigo-300 border border-indigo-500/25 ml-1.5">
             2026 Index
           </span>
         </div>
       </a>
 
-      <nav class="flex flex-wrap items-center gap-4 sm:gap-7 text-xs sm:text-sm font-medium text-slate-300">
-        <a href="/" class="text-white font-semibold relative after:absolute after:left-0 after:-bottom-1 after:w-full after:h-0.5 after:bg-indigo-400">Home</a>
-        <a href="/about" class="hover:text-white transition">About Us</a>
-        <a href="/contact" class="hover:text-white transition">Contact</a>
-        <a href="/privacy" class="hover:text-white transition">Privacy Policy</a>
-        <a href="/sitemap.xml" class="hidden md:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs transition">
-          <span>Sitemap</span>
-        </a>
-      </nav>
+      <div class="flex items-center gap-4 sm:gap-6">
+        <nav class="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">
+          <a href="/" class="text-indigo-600 dark:text-white font-semibold">Home</a>
+          <a href="/about" class="hover:text-indigo-600 dark:hover:text-white transition">About Us</a>
+          <a href="/contact" class="hover:text-indigo-600 dark:hover:text-white transition">Contact</a>
+          <a href="/privacy" class="hover:text-indigo-600 dark:hover:text-white transition">Privacy Policy</a>
+          <a href="/sitemap.xml" class="hidden md:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-800 text-xs transition">
+            <span>Sitemap</span>
+          </a>
+        </nav>
+
+        <!-- Persistent Dark / Light Mode Toggle Switch -->
+        <button
+          id="themeToggleBtn"
+          type="button"
+          onclick="toggleTheme()"
+          aria-label="Toggle Dark or Light Mode"
+          class="relative inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200/80 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-200/90 dark:border-slate-700/80 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-sm transition-all duration-200 hover:scale-105"
+        >
+          <!-- Sun Icon (shown in Dark mode to switch to Light) -->
+          <svg id="sunIcon" class="w-4 h-4 text-amber-400 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <!-- Moon Icon (shown in Light mode to switch to Dark) -->
+          <svg id="moonIcon" class="w-4 h-4 text-indigo-600 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+          <span id="themeToggleLabel" class="hidden sm:inline">Theme</span>
+        </button>
+      </div>
     </div>
   </header>
 
   <!-- Hero Section -->
-  <section class="relative pt-14 pb-16 sm:pt-20 sm:pb-24 border-b border-slate-800/80">
+  <section class="relative z-10 pt-14 pb-16 sm:pt-20 sm:pb-24 border-b border-slate-200/80 dark:border-slate-800/80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest bg-indigo-500/10 text-indigo-300 border border-indigo-500/25 mb-6 shadow-sm">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      <div class="animate-float inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/25 mb-6 shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse"></span>
         <span><%= pages.length %>+ Verified Engineering &amp; Market Intelligence Guides</span>
       </div>
 
-      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight max-w-4xl mx-auto leading-[1.12] text-white">
-        Next-Gen Tech Architecture, AI Workflows &amp; <span class="bg-gradient-to-r from-indigo-400 via-sky-400 to-emerald-400 bg-clip-text text-transparent">Compensation Directory</span>
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight max-w-4xl mx-auto leading-[1.12] text-slate-900 dark:text-white">
+        Next-Gen Tech Architecture, AI Workflows &amp; <span class="bg-gradient-to-r from-indigo-600 via-sky-500 to-emerald-500 dark:from-indigo-400 dark:via-sky-400 dark:to-emerald-400 bg-clip-text text-transparent">Compensation Directory</span>
       </h1>
 
-      <p class="mt-6 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+      <p class="mt-6 text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
         Explore deeply researched technical benchmarks, enterprise AI/RAG patterns, cloud FinOps strategies, and localized salary percentiles across global technology hubs.
       </p>
 
@@ -110,19 +211,19 @@
             name="q"
             value="<%= searchQuery %>"
             placeholder="Filter 100+ guides instantly (e.g., AI, PostgreSQL, San Francisco, DevOps, Fintech)..."
-            class="w-full pl-5 pr-4 py-4 rounded-2xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition text-sm sm:text-base shadow-xl"
+            class="w-full pl-5 pr-4 py-4 rounded-2xl bg-white/90 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700/80 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition text-sm sm:text-base shadow-lg"
           />
         </div>
         <button
           type="submit"
-          class="px-7 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-sky-600 hover:from-indigo-500 hover:to-sky-500 text-white font-semibold text-sm sm:text-base shadow-lg shadow-indigo-600/25 transition shrink-0"
+          class="px-7 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-sky-600 hover:from-indigo-500 hover:to-sky-500 text-white font-semibold text-sm sm:text-base shadow-lg shadow-indigo-600/25 transition shrink-0 hover:scale-[1.02]"
         >
           Search Index
         </button>
         <% if (searchQuery) { %>
           <a
             href="/"
-            class="px-5 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 font-medium text-sm sm:text-base transition shrink-0 text-center"
+            class="px-5 py-4 rounded-2xl bg-slate-200 hover:bg-slate-300 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-800 font-medium text-sm sm:text-base transition shrink-0 text-center"
           >
             Reset
           </a>
@@ -131,25 +232,25 @@
 
       <!-- Quick Filter Pills -->
       <div class="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs">
-        <button type="button" onclick="filterByKeyword('')" class="glass-pill px-3.5 py-1.5 rounded-full text-slate-200 hover:text-white hover:border-indigo-400 transition font-medium">
+        <button type="button" onclick="filterByKeyword('')" class="px-3.5 py-1.5 rounded-full bg-white/80 dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:border-indigo-500 dark:hover:border-indigo-400 transition font-semibold shadow-sm">
           All Topics (<%= pages.length %>)
         </button>
-        <button type="button" onclick="filterByKeyword('ai')" class="glass-pill px-3.5 py-1.5 rounded-full text-slate-300 hover:text-white hover:border-indigo-400 transition">
+        <button type="button" onclick="filterByKeyword('ai')" class="px-3.5 py-1.5 rounded-full bg-white/70 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-indigo-500 dark:hover:border-indigo-400 transition">
           AI &amp; LLM Engineering
         </button>
-        <button type="button" onclick="filterByKeyword('salary')" class="glass-pill px-3.5 py-1.5 rounded-full text-slate-300 hover:text-white hover:border-indigo-400 transition">
+        <button type="button" onclick="filterByKeyword('salary')" class="px-3.5 py-1.5 rounded-full bg-white/70 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-indigo-500 dark:hover:border-indigo-400 transition">
           Tech Salaries
         </button>
-        <button type="button" onclick="filterByKeyword('cloud')" class="glass-pill px-3.5 py-1.5 rounded-full text-slate-300 hover:text-white hover:border-indigo-400 transition">
+        <button type="button" onclick="filterByKeyword('cloud')" class="px-3.5 py-1.5 rounded-full bg-white/70 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-indigo-500 dark:hover:border-indigo-400 transition">
           Cloud &amp; Kubernetes
         </button>
-        <button type="button" onclick="filterByKeyword('fintech')" class="glass-pill px-3.5 py-1.5 rounded-full text-slate-300 hover:text-white hover:border-indigo-400 transition">
+        <button type="button" onclick="filterByKeyword('fintech')" class="px-3.5 py-1.5 rounded-full bg-white/70 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-indigo-500 dark:hover:border-indigo-400 transition">
           Fintech &amp; Payments
         </button>
-        <button type="button" onclick="filterByKeyword('postgresql')" class="glass-pill px-3.5 py-1.5 rounded-full text-slate-300 hover:text-white hover:border-indigo-400 transition">
+        <button type="button" onclick="filterByKeyword('postgresql')" class="px-3.5 py-1.5 rounded-full bg-white/70 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-indigo-500 dark:hover:border-indigo-400 transition">
           Databases &amp; SQL
         </button>
-        <button type="button" onclick="filterByKeyword('san francisco')" class="glass-pill px-3.5 py-1.5 rounded-full text-slate-300 hover:text-white hover:border-indigo-400 transition">
+        <button type="button" onclick="filterByKeyword('san francisco')" class="px-3.5 py-1.5 rounded-full bg-white/70 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-indigo-500 dark:hover:border-indigo-400 transition">
           San Francisco
         </button>
       </div>
@@ -157,36 +258,36 @@
   </section>
 
   <!-- Main Content Container -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <main class="relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <% if (typeof notFoundSlug !== 'undefined' && notFoundSlug) { %>
-      <div class="mb-8 rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 text-amber-200 flex items-center justify-between">
+      <div class="mb-8 rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 text-amber-800 dark:text-amber-200 flex items-center justify-between">
         <div>
-          <p class="font-semibold text-xs uppercase tracking-wider text-amber-400">Report Not Found (404)</p>
-          <p class="mt-1 text-sm">We couldn't find a guide matching <code class="px-1.5 py-0.5 rounded bg-amber-950/80 font-mono text-xs">/<%= notFoundSlug %></code>. Browse all verified reports below.</p>
+          <p class="font-semibold text-xs uppercase tracking-wider text-amber-600 dark:text-amber-400">Report Not Found (404)</p>
+          <p class="mt-1 text-sm">We couldn't find a guide matching <code class="px-1.5 py-0.5 rounded bg-amber-500/20 font-mono text-xs">/<%= notFoundSlug %></code>. Browse all verified reports below.</p>
         </div>
-        <a href="/" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-100 transition">Dismiss</a>
+        <a href="/" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 transition">Dismiss</a>
       </div>
     <% } %>
 
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800/80">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200/80 dark:border-slate-800/80">
       <div>
-        <h2 class="text-xl sm:text-2xl font-bold text-white">
+        <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
           <% if (searchQuery) { %>
             Search Results for "<%= searchQuery %>"
           <% } else { %>
             Verified Engineering, AI &amp; Compensation Guides
           <% } %>
         </h2>
-        <p class="text-sm text-slate-400 mt-1">
-          Showing <span id="visibleCountLabel" class="font-semibold text-indigo-400"><%= pages.length %></span> comprehensive programmatic reports with structured FAQ schema
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          Showing <span id="visibleCountLabel" class="font-semibold text-indigo-600 dark:text-indigo-400"><%= pages.length %></span> comprehensive programmatic reports with structured FAQ schema
         </p>
       </div>
     </div>
 
     <% if (pages.length === 0) { %>
-      <div class="mt-12 glass-card rounded-2xl p-12 text-center">
-        <h3 class="text-lg font-bold text-white">No Matching Guides Found</h3>
-        <p class="mt-2 text-sm text-slate-400 max-w-md mx-auto">
+      <div class="mt-12 spotlight-card rounded-2xl p-12 text-center">
+        <h3 class="text-lg font-bold text-slate-900 dark:text-white">No Matching Guides Found</h3>
+        <p class="mt-2 text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto">
           Try clearing your search query or selecting a different category above.
         </p>
       </div>
@@ -195,36 +296,36 @@
         <% pages.forEach(function(item) { %>
           <article
             data-search="<%= (item.title + ' ' + item.slug + ' ' + item.description).toLowerCase() %>"
-            class="directory-card relative group glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
+            class="directory-card spotlight-card group rounded-2xl p-6 hover:-translate-y-1.5 flex flex-col justify-between"
           >
             <div>
-              <div class="flex items-center justify-between gap-2 text-xs text-slate-400 mb-3">
-                <span class="font-mono bg-slate-900/90 text-indigo-300 border border-slate-800 px-2.5 py-1 rounded-lg truncate max-w-[220px]">
+              <div class="flex items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400 mb-3">
+                <span class="font-mono bg-slate-100 dark:bg-slate-900/90 text-indigo-600 dark:text-indigo-300 border border-slate-200/80 dark:border-slate-800 px-2.5 py-1 rounded-lg truncate max-w-[220px]">
                   /<%= item.slug %>
                 </span>
-                <time datetime="<%= item.created_at %>" class="shrink-0 text-slate-500">
+                <time datetime="<%= item.created_at %>" class="shrink-0 text-slate-400 dark:text-slate-500">
                   <%= item.created_at ? item.created_at.split(' ')[0] : '2026' %>
                 </time>
               </div>
 
-              <h3 class="text-lg font-bold text-white group-hover:text-indigo-400 transition leading-snug">
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition leading-snug">
                 <a href="/<%= item.slug %>" class="focus:outline-none">
                   <span class="absolute inset-0" aria-hidden="true"></span>
                   <%= item.title %>
                 </a>
               </h3>
 
-              <p class="mt-3 text-sm text-slate-300/90 line-clamp-3 leading-relaxed">
+              <p class="mt-3 text-sm text-slate-600 dark:text-slate-300/90 line-clamp-3 leading-relaxed">
                 <%= item.description.replace(/\n+/g, ' ').slice(0, 195) %>...
               </p>
             </div>
 
-            <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-semibold">
-              <span class="inline-flex items-center gap-1.5 text-slate-400">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <div class="mt-6 pt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between text-xs font-semibold">
+              <span class="inline-flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400"></span>
                 <%= item.faqs ? item.faqs.length : 3 %> Structured FAQs
               </span>
-              <span class="text-indigo-400 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+              <span class="text-indigo-600 dark:text-indigo-400 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
                 Read Guide &rarr;
               </span>
             </div>
@@ -234,22 +335,22 @@
     <% } %>
 
     <!-- Editorial Methodology & AdSense Transparency Section -->
-    <section class="mt-16 glass-card rounded-2xl p-8 sm:p-10">
+    <section class="mt-16 spotlight-card rounded-2xl p-8 sm:p-10">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
         <div class="lg:col-span-2 space-y-3">
-          <span class="text-xs font-bold uppercase tracking-widest text-indigo-400">Editorial Standards &amp; Methodology</span>
-          <h2 class="text-2xl font-bold text-white">
+          <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">Editorial Standards &amp; Methodology</span>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white">
             Built for Engineering Leaders, Developers &amp; Career Benchmarking
           </h2>
-          <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+          <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
             <strong>TechPay Index</strong> combines regional compensation data, enterprise architecture benchmarks, and structured technical guides across AI engineering, DevOps automation, cloud FinOps, and database scalability. Every report is vetted for clarity, original analysis, and structured Schema.org metadata.
           </p>
         </div>
         <div class="flex flex-col sm:flex-row lg:flex-col gap-3">
-          <a href="/about" class="px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm text-center transition">
+          <a href="/about" class="px-5 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-sky-600 hover:from-indigo-500 hover:to-sky-500 text-white font-semibold text-sm text-center shadow-md transition">
             Explore Our Methodology &rarr;
           </a>
-          <a href="/contact" class="px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 font-semibold text-sm text-center transition">
+          <a href="/contact" class="px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 font-semibold text-sm text-center transition">
             Contact Editorial Team
           </a>
         </div>
@@ -258,20 +359,52 @@
   </main>
 
   <!-- Global Footer -->
-  <footer class="border-t border-slate-800/80 bg-slate-950/90 mt-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+  <footer class="relative z-10 border-t border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-[#050814]/90 backdrop-blur-md mt-16 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
       <p>&copy; <%= new Date().getFullYear() %> TechPay Programmatic SEO Directory. All rights reserved.</p>
       <div class="flex flex-wrap items-center gap-6">
-        <a href="/" class="hover:text-white transition">Home</a>
-        <a href="/about" class="hover:text-white transition">About Us</a>
-        <a href="/contact" class="hover:text-white transition">Contact Us</a>
-        <a href="/privacy" class="hover:text-white transition">Privacy Policy</a>
-        <a href="/sitemap.xml" class="hover:text-white transition">XML Sitemap</a>
+        <a href="/" class="hover:text-indigo-600 dark:hover:text-white transition">Home</a>
+        <a href="/about" class="hover:text-indigo-600 dark:hover:text-white transition">About Us</a>
+        <a href="/contact" class="hover:text-indigo-600 dark:hover:text-white transition">Contact Us</a>
+        <a href="/privacy" class="hover:text-indigo-600 dark:hover:text-white transition">Privacy Policy</a>
+        <a href="/sitemap.xml" class="hover:text-indigo-600 dark:hover:text-white transition">XML Sitemap</a>
       </div>
     </div>
   </footer>
 
   <script>
+    // 1. Theme Switcher (Dark & Light Mode with localStorage persistence)
+    function updateThemeUI() {
+      const isDark = document.documentElement.classList.contains('dark');
+      const label = document.getElementById('themeToggleLabel');
+      if (label) {
+        label.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+      }
+    }
+
+    function toggleTheme() {
+      const root = document.documentElement;
+      const isDark = root.classList.toggle('dark');
+      localStorage.setItem('techpay_theme', isDark ? 'dark' : 'light');
+      updateThemeUI();
+    }
+    updateThemeUI();
+
+    // 2. Interactive Mouse-Tracking Global Spotlight & Card Glow
+    window.addEventListener('mousemove', (e) => {
+      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+    }, { passive: true });
+
+    document.querySelectorAll('.spotlight-card').forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--card-x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--card-y', `${e.clientY - rect.top}px`);
+      }, { passive: true });
+    });
+
+    // 3. Instant Client-Side Search & Pill Filtering
     const searchInput = document.getElementById('liveSearchInput');
     const cards = Array.from(document.querySelectorAll('.directory-card'));
     const countLabel = document.getElementById('visibleCountLabel');
