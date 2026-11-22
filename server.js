@@ -1,5 +1,6 @@
 // server.js
 require('dotenv').config();
+const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const compression = require('compression');
@@ -81,31 +82,23 @@ app.use('/api', createApiRouter(db));
 app.use('/admin', createAdminRouter(db));
 
 const selectAllPagesStmt = db.prepare(`
-  SELECT id, slug, title, description, faqs, created_at
+  SELECT id, slug, title, description, faqs, meta, created_at
   FROM pages
-  ORDER BY created_at DESC, id DESC
+  ORDER BY id ASC
 `);
 
 const searchPagesStmt = db.prepare(`
-  SELECT id, slug, title, description, faqs, created_at
+  SELECT id, slug, title, description, faqs, meta, created_at
   FROM pages
   WHERE title LIKE ? OR slug LIKE ? OR description LIKE ?
-  ORDER BY created_at DESC, id DESC
+  ORDER BY id ASC
 `);
 
 const selectPageBySlugStmt = db.prepare(`
-  SELECT id, slug, title, description, faqs, created_at
+  SELECT id, slug, title, description, faqs, meta, created_at
   FROM pages
   WHERE slug = ?
   LIMIT 1
-`);
-
-const selectRelatedPagesStmt = db.prepare(`
-  SELECT id, slug, title, description, created_at
-  FROM pages
-  WHERE slug != ?
-  ORDER BY RANDOM()
-  LIMIT 6
 `);
 
 function parseFaqs(faqsText) {
@@ -116,6 +109,39 @@ function parseFaqs(faqsText) {
     return [];
   }
 }
+
+function parseMeta(metaText) {
+  try {
+    const parsed = JSON.parse(metaText || '{}');
+    return parsed && typeof parsed === 'object' ? parsed : {};
+  } catch (_err) {
+    return {};
+  }
+}
+
+function hydratePageRow(row) {
+  const meta = parseMeta(row.meta);
+  return {
+    ...row,
+    faqs: parseFaqs(row.faqs),
+    meta,
+    category: meta.category || 'Engineering & Compensation',
+    city: meta.city || 'Global Benchmark'
+  };
+}
+
+const CATEGORY_DESCRIPTIONS = {
+  'Tech Salaries': 'Localized base salary percentiles (P25/P50/P75), RSU equity vesting, and tax-adjusted take-home pay.',
+  'AI Engineering': 'Production RAG vector databases, LoRA fine-tuning, 4-bit AWQ quantization, and vLLM inference scaling.',
+  'Cloud Infrastructure': 'Kubernetes FinOps, Karpenter spot node autoscaling, and fractional NVIDIA MIG GPU cluster sharing.',
+  'Cybersecurity': 'Zero-Trust IAM, OIDC workload identity federation, SPIFFE/SPIRE mTLS, and OPA policy-as-code.',
+  'Fintech': 'Algorithmic multi-acquirer payment routing, ISO 20022 real-time settlement, and ML fraud scoring.',
+  'Web Dev': 'Full-stack TypeScript monorepos, Turborepo remote caching, glassmorphism UI, and distributed edge SQLite.',
+  'DevOps': 'OpenTelemetry tail-based sampling, kernel eBPF observability, and automated GitHub Actions pipelines.',
+  'Data Engineering': 'Zero-GC Rust + Kafka streaming consumers, Apache Arrow/Iceberg lakehouses, and sub-10ms pipelines.',
+  'Developer Tools': 'AST-scoped AI code review agents, sandboxed test generation, and deterministic CI static analysis.',
+  'Databases': 'PostgreSQL B-Tree/GIN/BRIN indexing, pgvector HNSW tuning, and connection pooling optimization.'
+};
 
 app.get('/robots.txt', (_req, res) => {
   res.type('text/plain');
@@ -172,6 +198,46 @@ app.get('/sitemap.xml', (_req, res) => {
   }
 });
 
+function buildHomeContext(rawPages, searchQuery, notFoundSlug = null) {
+  const pages = rawPages.map(hydratePageRow);
+
+  const categoryMap = {};
+  pages.forEach((p) => {
+    const cat = p.category;
+    if (!categoryMap[cat]) {
+      categoryMap[cat] = {
+        name: cat,
+        count: 0,
+        description: CATEGORY_DESCRIPTIONS[cat] || 'In-depth technical benchmarks and production implementation guides.',
+        sampleSlug: p.slug
+      };
+    }
+    categoryMap[cat].count += 1;
+  });
+
+  const categories = Object.values(categoryMap).sort((a, b) => b.count - a.count);
+
+  const featuredSlugs = new Set([
+    'ai-robo-advisors-2026',
+    'python-automation-workflows',
+    'nextjs-tailwind-glassmorphism',
+    'postgresql-performance-tuning',
+    'machine-learning-engineer-salary-in-san-francisco',
+    'enterprise-rag-vector-database-architecture-san-francisco-2026'
+  ]);
+  const featuredPages = pages.filter((p) => featuredSlugs.has(p.slug)).slice(0, 6);
+
+  return {
+    pages,
+    categories,
+    featuredPages: featuredPages.length > 0 ? featuredPages : pages.slice(0, 6),
+    searchQuery,
+    totalCount: pages.length,
+    siteUrl: SITE_URL,
+    notFoundSlug
+  };
+}
+
 app.get('/', (req, res) => {
   try {
     const searchQuery = (req.query.q || '').trim();
@@ -180,17 +246,7 @@ app.get('/', (req, res) => {
       ? searchPagesStmt.all(likePattern, likePattern, likePattern)
       : selectAllPagesStmt.all();
 
-    const pages = rawPages.map((row) => ({
-      ...row,
-      faqs: parseFaqs(row.faqs)
-    }));
-
-    res.render('home', {
-      pages,
-      searchQuery,
-      totalCount: pages.length,
-      siteUrl: SITE_URL
-    });
+    res.render('home', buildHomeContext(rawPages, searchQuery));
   } catch (error) {
     console.error('Error rendering home route:', error);
     res.status(500).send('Internal Server Error');
@@ -222,27 +278,24 @@ app.get('/:slug', (req, res) => {
     const row = selectPageBySlugStmt.get(slug);
 
     if (!row) {
-      const fs = require('fs');
       const generatedTemplatePath = path.join(__dirname, 'views', 'generated', `${slug}.ejs`);
       if (fs.existsSync(generatedTemplatePath)) {
         return res.render(`generated/${slug}`, { siteUrl: SITE_URL });
       }
 
-      return res.status(404).render('home', {
-        pages: selectAllPagesStmt.all().map((r) => ({ ...r, faqs: parseFaqs(r.faqs) })),
-        searchQuery: '',
-        totalCount: 0,
-        siteUrl: SITE_URL,
-        notFoundSlug: slug
-      });
+      const allRaw = selectAllPagesStmt.all();
+      return res.status(404).render('home', buildHomeContext(allRaw, '', slug));
     }
 
-    const page = {
-      ...row,
-      faqs: parseFaqs(row.faqs)
-    };
+    const page = hydratePageRow(row);
+    const allPages = selectAllPagesStmt.all().map(hydratePageRow);
 
-    const relatedPages = selectRelatedPagesStmt.all(slug);
+    // Build contextually relevant related pages (same category or same city, then cross-pillar)
+    const sameCategory = allPages.filter((p) => p.slug !== slug && p.category === page.category).slice(0, 4);
+    const sameCityOrOther = allPages
+      .filter((p) => p.slug !== slug && p.category !== page.category && (p.city === page.city || p.slug.includes('2026')))
+      .slice(0, 4);
+    const relatedPages = [...sameCategory, ...sameCityOrOther].slice(0, 6);
 
     return res.render('page', {
       page,

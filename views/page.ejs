@@ -5,10 +5,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><%= page.title %> | TechPay Directory</title>
-  <meta name="description" content="<%= page.description.replace(/\n+/g, ' ').slice(0, 158) %>" />
+  <meta name="description" content="<%= (page.meta && page.meta.overview_paragraphs && page.meta.overview_paragraphs[0] ? page.meta.overview_paragraphs[0] : page.description).replace(/\n+/g, ' ').slice(0, 158) %>" />
   <link rel="canonical" href="<%= siteUrl %>/<%= page.slug %>" />
   <meta property="og:title" content="<%= page.title %>" />
-  <meta property="og:description" content="<%= page.description.replace(/\n+/g, ' ').slice(0, 158) %>" />
+  <meta property="og:description" content="<%= (page.meta && page.meta.overview_paragraphs && page.meta.overview_paragraphs[0] ? page.meta.overview_paragraphs[0] : page.description).replace(/\n+/g, ' ').slice(0, 158) %>" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="<%= siteUrl %>/<%= page.slug %>" />
   <!-- Google AdSense Auto-Ads Verification Script -->
@@ -62,7 +62,7 @@
     .spotlight-card {
       position: relative;
       overflow: hidden;
-      background: rgba(255, 255, 255, 0.84);
+      background: rgba(255, 255, 255, 0.86);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       border: 1px solid rgba(15, 23, 42, 0.08);
@@ -70,7 +70,7 @@
       transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease, box-shadow 0.28s ease, background-color 0.3s ease;
     }
     .dark .spotlight-card {
-      background: rgba(15, 23, 42, 0.65);
+      background: rgba(15, 23, 42, 0.68);
       border: 1px solid rgba(255, 255, 255, 0.08);
       box-shadow: 0 15px 35px -12px rgba(0, 0, 0, 0.45);
     }
@@ -106,16 +106,26 @@
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "Article",
+        "@type": "TechArticle",
         "headline": page.title,
-        "description": page.description.replace(/\n+/g, ' ').slice(0, 160),
+        "articleSection": (page.meta && page.meta.category) || "Technology & Compensation",
+        "description": (page.meta && page.meta.overview_paragraphs && page.meta.overview_paragraphs[0] ? page.meta.overview_paragraphs[0] : page.description).replace(/\n+/g, ' ').slice(0, 160),
         "datePublished": page.created_at || new Date().toISOString(),
         "dateModified": page.created_at || new Date().toISOString(),
         "mainEntityOfPage": siteUrl + "/" + page.slug,
         "author": {
           "@type": "Organization",
-          "name": "TechPay SEO Directory"
+          "name": "TechPay Editorial & Data Research Team",
+          "url": siteUrl + "/about"
         }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Directory Home", "item": siteUrl + "/" },
+          { "@type": "ListItem", "position": 2, "name": (page.meta && page.meta.category) || "Guides", "item": siteUrl + "/?q=" + encodeURIComponent((page.meta && page.meta.category) || "") },
+          { "@type": "ListItem", "position": 3, "name": page.title, "item": siteUrl + "/" + page.slug }
+        ]
       },
       ...(page.faqs && page.faqs.length > 0 ? [{
         "@type": "FAQPage",
@@ -136,10 +146,8 @@
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-[#050814] dark:text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white relative overflow-x-hidden transition-colors duration-300">
 
-  <!-- Dynamic Mouse-Tracking Spotlight -->
   <div id="cursor-spotlight" class="fixed inset-0 pointer-events-none z-0"></div>
 
-  <!-- Ambient Glows -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
     <div class="absolute -top-32 left-1/4 w-96 h-96 bg-indigo-500/15 dark:bg-indigo-600/20 rounded-full blur-3xl"></div>
     <div class="absolute top-1/3 -right-32 w-96 h-96 bg-sky-400/15 dark:bg-sky-500/15 rounded-full blur-3xl"></div>
@@ -187,13 +195,27 @@
     </div>
   </header>
 
+  <%
+    const meta = page.meta || {};
+    const headings = meta.headings || {
+      s1: 'Executive Overview & 2026 Industry Context',
+      s2: 'Practical Production Use Cases & Scenarios',
+      s3: '4-Phase Implementation & Execution Blueprint',
+      s4: 'Comparative Benchmark & Performance Matrix',
+      s5: 'Strategic Advantages vs. Operational Trade-Offs'
+    };
+    const defaultSalaryBase = meta.salary_base || 185000;
+  %>
+
   <!-- Hero Banner -->
-  <div class="relative z-10 border-b border-slate-200/80 dark:border-slate-800/80 py-12 sm:py-16">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <nav aria-label="Breadcrumb" class="text-xs font-medium text-slate-500 dark:text-slate-400 flex items-center gap-2 mb-5">
+  <div class="relative z-10 border-b border-slate-200/80 dark:border-slate-800/80 py-10 sm:py-14">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav aria-label="Breadcrumb" class="text-xs font-medium text-slate-500 dark:text-slate-400 flex flex-wrap items-center gap-2 mb-4">
         <a href="/" class="hover:text-indigo-600 dark:hover:text-white transition">Directory Home</a>
         <span>/</span>
-        <span class="text-indigo-600 dark:text-indigo-400 font-mono truncate"><%= page.slug %></span>
+        <a href="/?q=<%= encodeURIComponent(page.category || '') %>" class="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold"><%= page.category %></a>
+        <span>/</span>
+        <span class="font-mono text-slate-400 truncate max-w-[260px]"><%= page.slug %></span>
       </nav>
 
       <h1 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-slate-900 dark:text-white">
@@ -204,13 +226,16 @@
         <div class="flex flex-wrap items-center gap-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
           <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 font-semibold">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400"></span>
-            Verified 2026 Report
+            Verified 2026 Benchmark
           </span>
-          <span>
-            Updated: <time datetime="<%= page.created_at %>" class="font-semibold text-slate-900 dark:text-white"><%= page.created_at ? page.created_at.split(' ')[0] : '2026' %></time>
-          </span>
+          <% if (meta.city) { %>
+            <span class="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/25 font-medium">
+              <%= meta.city %>
+            </span>
+          <% } %>
+          <span><%= meta.reading_time || '7 min read' %></span>
           <span>&bull;</span>
-          <span class="font-mono text-xs text-slate-500 dark:text-slate-400">ID #<%= page.id %></span>
+          <span>Updated <time datetime="<%= page.created_at %>" class="font-semibold text-slate-900 dark:text-white"><%= page.created_at ? page.created_at.split(' ')[0] : '2026' %></time></span>
         </div>
 
         <button
@@ -221,32 +246,281 @@
           Share Report Link
         </button>
       </div>
+
+      <% if (meta.kpis && meta.kpis.length > 0) { %>
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <% meta.kpis.forEach(function(kpi) { %>
+            <div class="spotlight-card rounded-xl p-4">
+              <span class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400"><%= kpi.label %></span>
+              <span class="mt-1.5 block text-sm sm:text-base font-extrabold text-indigo-600 dark:text-indigo-300"><%= kpi.value %></span>
+            </div>
+          <% }); %>
+        </div>
+      <% } %>
     </div>
   </div>
 
-  <!-- Main Content -->
-  <main class="relative z-10 flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
-    <article class="spotlight-card rounded-2xl p-6 sm:p-10">
-      <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white pb-4 border-b border-slate-200 dark:border-slate-800">
-        Executive Summary &amp; In-Depth Analysis
-      </h2>
+  <!-- Main Content Layout -->
+  <main class="relative z-10 flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
 
-      <div class="mt-6 space-y-5 text-slate-700 dark:text-slate-200 text-base sm:text-lg leading-relaxed">
-        <% page.description.split(/\n\s*\n/).forEach(function(paragraph) { %>
-          <% if (paragraph.trim()) { %>
-            <p><%= paragraph.trim() %></p>
-          <% } %>
-        <% }); %>
+    <!-- Quick Jump Table of Contents -->
+    <nav aria-label="Table of Contents" class="spotlight-card rounded-2xl p-5 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
+      <span class="font-bold uppercase tracking-wider text-xs text-indigo-600 dark:text-indigo-400">On This Page:</span>
+      <div class="flex flex-wrap items-center gap-4 font-medium text-slate-600 dark:text-slate-300">
+        <a href="#section-overview" class="hover:text-indigo-600 dark:hover:text-white transition">1. Overview</a>
+        <a href="#section-use-cases" class="hover:text-indigo-600 dark:hover:text-white transition">2. Use Cases</a>
+        <a href="#section-blueprint" class="hover:text-indigo-600 dark:hover:text-white transition">3. 4-Phase Blueprint</a>
+        <a href="#section-matrix" class="hover:text-indigo-600 dark:hover:text-white transition">4. Benchmark Matrix</a>
+        <a href="#section-tradeoffs" class="hover:text-indigo-600 dark:hover:text-white transition">5. Pros &amp; Trade-Offs</a>
+        <a href="#section-calculator" class="hover:text-indigo-600 dark:hover:text-white transition">6. Interactive Calculator</a>
+        <a href="#section-faqs" class="hover:text-indigo-600 dark:hover:text-white transition">7. FAQs</a>
       </div>
+    </nav>
 
-      <div class="mt-8 pt-6 border-t border-slate-200/80 dark:border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
-        <span>Published by TechPay Editorial &amp; Data Research Team</span>
-        <a href="/about" class="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold">Read our data methodology &rarr;</a>
+    <!-- Primary Deep-Dive Editorial Article -->
+    <article class="spotlight-card rounded-2xl p-6 sm:p-10 space-y-10">
+
+      <% if (meta.stack) { %>
+        <div class="p-4 rounded-xl bg-indigo-500/10 dark:bg-indigo-950/50 border border-indigo-500/25 text-xs sm:text-sm text-indigo-900 dark:text-indigo-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div><strong>Core Reference Stack &amp; Standards:</strong> <%= meta.stack %></div>
+          <% if (meta.region) { %>
+            <span class="text-xs font-mono text-indigo-600 dark:text-indigo-300 shrink-0"><%= meta.region %></span>
+          <% } %>
+        </div>
+      <% } %>
+
+      <!-- Section 1: Overview -->
+      <section id="section-overview" class="space-y-4 scroll-mt-24">
+        <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white pb-3 border-b border-slate-200 dark:border-slate-800">
+          <%= headings.s1 %>
+        </h2>
+        <% if (meta.overview_paragraphs && meta.overview_paragraphs.length > 0) { %>
+          <% meta.overview_paragraphs.forEach(function(p) { %>
+            <p class="text-slate-700 dark:text-slate-200 text-base sm:text-lg leading-relaxed"><%= p %></p>
+          <% }); %>
+        <% } else { %>
+          <% page.description.split(/\n\s*\n/).forEach(function(paragraph) { %>
+            <% if (paragraph.trim()) { %>
+              <p class="text-slate-700 dark:text-slate-200 text-base sm:text-lg leading-relaxed"><%= paragraph.trim() %></p>
+            <% } %>
+          <% }); %>
+        <% } %>
+      </section>
+
+      <!-- Section 2: Practical Use Cases -->
+      <% if (meta.use_cases && meta.use_cases.length > 0) { %>
+        <section id="section-use-cases" class="space-y-4 pt-6 border-t border-slate-200 dark:border-slate-800 scroll-mt-24">
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+            <%= headings.s2 %>
+          </h2>
+          <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300">
+            Below are the primary high-impact production scenarios where engineering teams and technical professionals apply these benchmarks:
+          </p>
+          <div class="grid grid-cols-1 gap-4">
+            <% meta.use_cases.forEach(function(uc, idx) { %>
+              <div class="p-5 rounded-xl bg-slate-100/70 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800 flex items-start gap-4">
+                <span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-bold text-xs shrink-0 mt-0.5">
+                  Scenario <%= idx + 1 %>
+                </span>
+                <p class="text-sm sm:text-base text-slate-700 dark:text-slate-200 leading-relaxed"><%= uc %></p>
+              </div>
+            <% }); %>
+          </div>
+        </section>
+      <% } %>
+
+      <!-- Section 3: 4-Phase Implementation Blueprint -->
+      <% if (meta.steps && meta.steps.length > 0) { %>
+        <section id="section-blueprint" class="space-y-4 pt-6 border-t border-slate-200 dark:border-slate-800 scroll-mt-24">
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+            <%= headings.s3 %>
+          </h2>
+          <div class="space-y-4">
+            <% meta.steps.forEach(function(step) { %>
+              <div class="p-5 rounded-xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 border-l-4 border-l-indigo-500 shadow-sm">
+                <p class="text-sm sm:text-base text-slate-800 dark:text-slate-200 leading-relaxed font-medium"><%= step %></p>
+              </div>
+            <% }); %>
+          </div>
+        </section>
+      <% } %>
+
+      <!-- Section 4: Comparative Benchmark Matrix Table -->
+      <% if (meta.table_headers && meta.table_rows && meta.table_rows.length > 0) { %>
+        <section id="section-matrix" class="space-y-4 pt-6 border-t border-slate-200 dark:border-slate-800 scroll-mt-24">
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+            <%= headings.s4 %>
+          </h2>
+          <div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-100 dark:bg-slate-900/95 border-b border-slate-200 dark:border-slate-800 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+                  <% meta.table_headers.forEach(function(th) { %>
+                    <th class="py-3.5 px-4"><%= th %></th>
+                  <% }); %>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200/70 dark:divide-slate-800/80 text-xs sm:text-sm">
+                <% meta.table_rows.forEach(function(row) { %>
+                  <tr class="hover:bg-indigo-500/5 transition">
+                    <% row.forEach(function(cell, cIdx) { %>
+                      <td class="py-3.5 px-4 <%= cIdx === 0 ? 'font-bold text-slate-900 dark:text-white' : 'text-slate-700 dark:text-slate-300' %>">
+                        <%= cell %>
+                      </td>
+                    <% }); %>
+                  </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      <% } %>
+
+      <!-- Section 5: Pros & Operational Trade-Offs + Regional Context -->
+      <% if (meta.pros && meta.cons) { %>
+        <section id="section-tradeoffs" class="space-y-6 pt-6 border-t border-slate-200 dark:border-slate-800 scroll-mt-24">
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+            <%= headings.s5 %>
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-6 rounded-2xl bg-emerald-500/5 border border-emerald-500/25 space-y-3">
+              <h3 class="text-sm font-extrabold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-2">
+                <span>✓ Strategic Advantages &amp; Upside</span>
+              </h3>
+              <ul class="space-y-3 text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
+                <% meta.pros.forEach(function(pro) { %>
+                  <li class="flex items-start gap-2.5">
+                    <span class="text-emerald-500 font-bold mt-0.5">•</span>
+                    <span><%= pro %></span>
+                  </li>
+                <% }); %>
+              </ul>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-rose-500/5 border border-rose-500/25 space-y-3">
+              <h3 class="text-sm font-extrabold uppercase tracking-wider text-rose-700 dark:text-rose-400 flex items-center gap-2">
+                <span>⚠ Operational Trade-Offs &amp; Risks</span>
+              </h3>
+              <ul class="space-y-3 text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
+                <% meta.cons.forEach(function(con) { %>
+                  <li class="flex items-start gap-2.5">
+                    <span class="text-rose-500 font-bold mt-0.5">•</span>
+                    <span><%= con %></span>
+                  </li>
+                <% }); %>
+              </ul>
+            </div>
+          </div>
+
+          <% if (meta.regional_insight) { %>
+            <div class="p-6 rounded-2xl bg-slate-100/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-2">
+              <h3 class="text-sm font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+                Regional Economics, Tax &amp; Compliance Context (<%= meta.city || 'Market Benchmark' %>)
+              </h3>
+              <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
+                <%= meta.regional_insight %>
+              </p>
+            </div>
+          <% } %>
+        </section>
+      <% } %>
+
+      <div class="pt-6 border-t border-slate-200/80 dark:border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+        <span>Reviewed by TechPay Editorial &amp; Systems Research Team</span>
+        <a href="/about" class="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold">View our research methodology &amp; data sources &rarr;</a>
       </div>
     </article>
 
+    <!-- Section 6: Interactive Compensation, Tax & Engineering ROI Calculator -->
+    <section id="section-calculator" class="spotlight-card rounded-2xl p-6 sm:p-10 scroll-mt-24">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Interactive Utility Tool</span>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1">
+            Total Compensation, Equity &amp; Engineering ROI Estimator
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+            Customize base salary, annual bonus %, 4-year RSU grant, and regional effective tax rate for <strong><%= meta.city || 'your hub' %></strong>.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+        <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="calcBase" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">
+              Annual Base Salary (USD)
+            </label>
+            <input
+              id="calcBase"
+              type="number"
+              value="<%= defaultSalaryBase %>"
+              step="2500"
+              oninput="recalculateComp()"
+              class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white font-semibold text-sm"
+            />
+          </div>
+
+          <div>
+            <label for="calcBonusPct" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">
+              Target Annual Bonus (%)
+            </label>
+            <input
+              id="calcBonusPct"
+              type="number"
+              value="15"
+              step="1"
+              oninput="recalculateComp()"
+              class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white font-semibold text-sm"
+            />
+          </div>
+
+          <div>
+            <label for="calcRsuFourYr" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">
+              4-Year Total RSU Equity Grant (USD)
+            </label>
+            <input
+              id="calcRsuFourYr"
+              type="number"
+              value="220000"
+              step="10000"
+              oninput="recalculateComp()"
+              class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white font-semibold text-sm"
+            />
+          </div>
+
+          <div>
+            <label for="calcTaxRate" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">
+              Combined Effective Tax Rate (%)
+            </label>
+            <input
+              id="calcTaxRate"
+              type="number"
+              value="32"
+              step="1"
+              oninput="recalculateComp()"
+              class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white font-semibold text-sm"
+            />
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-gradient-to-br from-indigo-600/15 via-sky-500/10 to-emerald-500/10 border border-indigo-500/30 space-y-4">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Annual Gross Total Comp (TC)</span>
+            <p id="outGrossTC" class="text-2xl sm:text-3xl font-extrabold text-indigo-600 dark:text-indigo-300 mt-0.5">$267,750</p>
+          </div>
+          <div class="pt-3 border-t border-slate-200/60 dark:border-slate-800">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Estimated Net After-Tax Pay</span>
+            <p id="outNetAnnual" class="text-xl font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">$182,070 / yr</p>
+            <p id="outNetMonthly" class="text-xs text-slate-500 dark:text-slate-400 mt-1">~$15,173 / month net take-home</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 7: Frequently Asked Questions -->
     <% if (page.faqs && page.faqs.length > 0) { %>
-      <section class="spotlight-card rounded-2xl p-6 sm:p-10">
+      <section id="section-faqs" class="spotlight-card rounded-2xl p-6 sm:p-10 scroll-mt-24">
         <div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800">
           <div>
             <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Structured FAQ Schema</span>
@@ -277,26 +551,35 @@
       </section>
     <% } %>
 
+    <!-- Contextual Internal Linking Grid -->
     <% if (relatedPages && relatedPages.length > 0) { %>
       <section class="pt-4">
         <div class="flex items-center justify-between mb-6">
-          <h2 class="text-xl font-bold text-slate-900 dark:text-white">Related Guides &amp; Benchmarks</h2>
-          <a href="/" class="text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">Browse all &rarr;</a>
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Topic Cluster Navigation</span>
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white mt-0.5">Related Engineering &amp; Compensation Guides</h2>
+          </div>
+          <a href="/?q=<%= encodeURIComponent(page.category || '') %>" class="text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">
+            Explore all <%= page.category %> guides &rarr;
+          </a>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <% relatedPages.forEach(function(rel) { %>
             <a
               href="/<%= rel.slug %>"
               class="group spotlight-card rounded-xl p-5 hover:-translate-y-1 transition flex flex-col justify-between"
             >
               <div>
-                <span class="text-xs font-mono text-indigo-600 dark:text-indigo-400">/<%= rel.slug %></span>
-                <h3 class="mt-1.5 text-base font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition">
+                <div class="flex items-center justify-between gap-2 text-[11px] font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 mb-1.5">
+                  <span><%= rel.category || 'Guide' %></span>
+                  <span class="text-slate-400"><%= rel.city || '' %></span>
+                </div>
+                <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition leading-snug">
                   <%= rel.title %>
                 </h3>
               </div>
               <span class="mt-4 text-xs font-semibold text-indigo-600 dark:text-indigo-400 inline-flex items-center gap-1">
-                Read guide &rarr;
+                Read benchmark &rarr;
               </span>
             </a>
           <% }); %>
@@ -334,6 +617,24 @@
       updateThemeUI();
     }
     updateThemeUI();
+
+    function recalculateComp() {
+      const base = parseFloat(document.getElementById('calcBase').value) || 0;
+      const bonusPct = parseFloat(document.getElementById('calcBonusPct').value) || 0;
+      const rsuFourYr = parseFloat(document.getElementById('calcRsuFourYr').value) || 0;
+      const taxRate = Math.min(70, Math.max(0, parseFloat(document.getElementById('calcTaxRate').value) || 0));
+
+      const annualBonus = base * (bonusPct / 100);
+      const annualRsu = rsuFourYr / 4;
+      const grossTC = Math.round(base + annualBonus + annualRsu);
+      const netAnnual = Math.round(grossTC * (1 - taxRate / 100));
+      const netMonthly = Math.round(netAnnual / 12);
+
+      document.getElementById('outGrossTC').textContent = '$' + grossTC.toLocaleString();
+      document.getElementById('outNetAnnual').textContent = '$' + netAnnual.toLocaleString() + ' / yr';
+      document.getElementById('outNetMonthly').textContent = '~$' + netMonthly.toLocaleString() + ' / month net take-home';
+    }
+    recalculateComp();
 
     window.addEventListener('mousemove', (e) => {
       document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);

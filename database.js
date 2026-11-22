@@ -54,6 +54,7 @@ function initializeDatabase() {
       title TEXT NOT NULL,
       description TEXT NOT NULL,
       faqs TEXT NOT NULL,
+      meta TEXT DEFAULT '{}',
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
   `;
@@ -79,6 +80,12 @@ function initializeDatabase() {
   db.exec(createPagesTableSQL);
   db.exec(createAnalyticsTableSQL);
   db.exec(createIndexesSQL);
+
+  try {
+    db.exec(`ALTER TABLE pages ADD COLUMN meta TEXT DEFAULT '{}';`);
+  } catch (_alterErr) {
+    // Column 'meta' already exists
+  }
 
   return db;
 }

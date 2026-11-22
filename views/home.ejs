@@ -4,11 +4,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TechPay Directory | AI, Cloud, Fintech &amp; Compensation Intelligence (2026)</title>
-  <meta name="description" content="Explore 100+ data-driven technology benchmarks, AI engineering workflows, fintech insights, and localized compensation reports across global tech hubs." />
+  <title>TechPay Directory | AI Architecture, Cloud FinOps &amp; Tech Compensation Benchmarks (2026)</title>
+  <meta name="description" content="Explore 125+ in-depth technical architecture blueprints, AI/RAG production benchmarks, cloud FinOps playbooks, and localized tech salary guides with interactive calculators." />
   <link rel="canonical" href="<%= siteUrl %>/" />
-  <meta property="og:title" content="TechPay Directory | Programmatic Tech & Compensation Intelligence" />
-  <meta property="og:description" content="100+ verified guides covering AI engineering, cloud architecture, fintech trends, and localized tech salary benchmarks." />
+  <meta property="og:title" content="TechPay Directory | Engineering & Compensation Intelligence" />
+  <meta property="og:description" content="125+ verified technical implementation blueprints, comparison matrices, and localized compensation reports." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="<%= siteUrl %>/" />
   <!-- Google AdSense Auto-Ads Verification Script -->
@@ -42,7 +42,6 @@
     }
     body { font-family: 'Inter', sans-serif; }
 
-    /* Global Mouse-Tracking Ambient Spotlight */
     #cursor-spotlight {
       background: radial-gradient(
         650px circle at var(--mouse-x) var(--mouse-y),
@@ -60,11 +59,10 @@
       );
     }
 
-    /* Interactive Spotlight Cards (Quartz Light & Obsidian Dark) */
     .spotlight-card {
       position: relative;
       overflow: hidden;
-      background: rgba(255, 255, 255, 0.82);
+      background: rgba(255, 255, 255, 0.84);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       border: 1px solid rgba(15, 23, 42, 0.08);
@@ -72,7 +70,7 @@
       transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease, box-shadow 0.28s ease, background-color 0.3s ease;
     }
     .dark .spotlight-card {
-      background: rgba(15, 23, 42, 0.62);
+      background: rgba(15, 23, 42, 0.65);
       border: 1px solid rgba(255, 255, 255, 0.08);
       box-shadow: 0 15px 35px -12px rgba(0, 0, 0, 0.45);
     }
@@ -103,14 +101,6 @@
       position: relative;
       z-index: 1;
     }
-
-    @keyframes floatSlow {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-5px); }
-    }
-    .animate-float {
-      animation: floatSlow 4.5s ease-in-out infinite;
-    }
   </style>
   <script type="application/ld+json">
   <%- JSON.stringify({
@@ -118,6 +108,7 @@
     "@type": "WebSite",
     "name": "TechPay SEO Directory",
     "url": siteUrl + "/",
+    "description": "In-depth engineering blueprints, AI system benchmarks, and localized technology compensation guides.",
     "potentialAction": {
       "@type": "SearchAction",
       "target": siteUrl + "/?q={search_term_string}",
@@ -128,17 +119,15 @@
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-[#050814] dark:text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white relative overflow-x-hidden transition-colors duration-300">
 
-  <!-- Dynamic Mouse-Tracking Spotlight Overlay -->
-  <div id="cursor-spotlight" class="fixed inset-0 pointer-events-none z-0 transition-opacity duration-300"></div>
+  <div id="cursor-spotlight" class="fixed inset-0 pointer-events-none z-0"></div>
 
-  <!-- Ambient Decorative Orbs -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
     <div class="absolute -top-40 -left-40 w-96 h-96 bg-indigo-500/15 dark:bg-indigo-600/20 rounded-full blur-3xl"></div>
     <div class="absolute top-1/4 right-0 w-96 h-96 bg-sky-400/15 dark:bg-sky-500/15 rounded-full blur-3xl"></div>
     <div class="absolute bottom-0 left-1/3 w-96 h-96 bg-emerald-400/10 dark:bg-emerald-500/10 rounded-full blur-3xl"></div>
   </div>
 
-  <!-- Sticky Glassmorphism Navigation Header -->
+  <!-- Sticky Header -->
   <header class="bg-white/80 dark:bg-[#050814]/80 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 sticky top-0 z-40 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
       <a href="/" class="flex items-center gap-3 group shrink-0">
@@ -156,15 +145,13 @@
       <div class="flex items-center gap-4 sm:gap-6">
         <nav class="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">
           <a href="/" class="text-indigo-600 dark:text-white font-semibold">Home</a>
+          <a href="#categories-hub" class="hidden sm:inline hover:text-indigo-600 dark:hover:text-white transition">Categories</a>
+          <a href="#interactive-estimator" class="hidden md:inline hover:text-indigo-600 dark:hover:text-white transition">Salary Calculator</a>
           <a href="/about" class="hover:text-indigo-600 dark:hover:text-white transition">About Us</a>
           <a href="/contact" class="hover:text-indigo-600 dark:hover:text-white transition">Contact</a>
           <a href="/privacy" class="hover:text-indigo-600 dark:hover:text-white transition">Privacy Policy</a>
-          <a href="/sitemap.xml" class="hidden md:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-800 text-xs transition">
-            <span>Sitemap</span>
-          </a>
         </nav>
 
-        <!-- Persistent Dark / Light Mode Toggle Switch -->
         <button
           id="themeToggleBtn"
           type="button"
@@ -172,12 +159,10 @@
           aria-label="Toggle Dark or Light Mode"
           class="relative inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200/80 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-200/90 dark:border-slate-700/80 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-sm transition-all duration-200 hover:scale-105"
         >
-          <!-- Sun Icon (shown in Dark mode to switch to Light) -->
-          <svg id="sunIcon" class="w-4 h-4 text-amber-400 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg class="w-4 h-4 text-amber-400 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
           </svg>
-          <!-- Moon Icon (shown in Light mode to switch to Dark) -->
-          <svg id="moonIcon" class="w-4 h-4 text-indigo-600 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg class="w-4 h-4 text-indigo-600 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
           </svg>
           <span id="themeToggleLabel" class="hidden sm:inline">Theme</span>
@@ -187,22 +172,22 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="relative z-10 pt-14 pb-16 sm:pt-20 sm:pb-24 border-b border-slate-200/80 dark:border-slate-800/80">
+  <section class="relative z-10 pt-14 pb-16 sm:pt-20 sm:pb-20 border-b border-slate-200/80 dark:border-slate-800/80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <div class="animate-float inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/25 mb-6 shadow-sm">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/25 mb-6 shadow-sm">
         <span class="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse"></span>
-        <span><%= pages.length %>+ Verified Engineering &amp; Market Intelligence Guides</span>
+        <span><%= pages.length %> In-Depth Engineering Blueprints &amp; Regional Compensation Reports</span>
       </div>
 
       <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight max-w-4xl mx-auto leading-[1.12] text-slate-900 dark:text-white">
-        Next-Gen Tech Architecture, AI Workflows &amp; <span class="bg-gradient-to-r from-indigo-600 via-sky-500 to-emerald-500 dark:from-indigo-400 dark:via-sky-400 dark:to-emerald-400 bg-clip-text text-transparent">Compensation Directory</span>
+        Production Systems Architecture, AI Benchmarks &amp; <span class="bg-gradient-to-r from-indigo-600 via-sky-500 to-emerald-500 dark:from-indigo-400 dark:via-sky-400 dark:to-emerald-400 bg-clip-text text-transparent">Compensation Intelligence</span>
       </h1>
 
-      <p class="mt-6 text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
-        Explore deeply researched technical benchmarks, enterprise AI/RAG patterns, cloud FinOps strategies, and localized salary percentiles across global technology hubs.
+      <p class="mt-6 text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
+        An independent technical reference hub featuring 4-phase engineering implementation blueprints, side-by-side performance comparison tables, architectural trade-off analyses, and tax-adjusted tech salary calculators across 8 global hubs.
       </p>
 
-      <!-- Interactive Search Bar -->
+      <!-- Search Bar -->
       <form action="/" method="GET" class="mt-9 max-w-2xl mx-auto flex flex-col sm:flex-row gap-3">
         <div class="relative flex-1">
           <input
@@ -210,15 +195,15 @@
             type="text"
             name="q"
             value="<%= searchQuery %>"
-            placeholder="Filter 100+ guides instantly (e.g., AI, PostgreSQL, San Francisco, DevOps, Fintech)..."
-            class="w-full pl-5 pr-4 py-4 rounded-2xl bg-white/90 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700/80 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition text-sm sm:text-base shadow-lg"
+            placeholder="Search by topic, stack, role, or city (e.g., RAG, PostgreSQL, Karpenter, Austin, London)..."
+            class="w-full pl-5 pr-4 py-4 rounded-2xl bg-white/95 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700/80 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition text-sm sm:text-base shadow-lg"
           />
         </div>
         <button
           type="submit"
-          class="px-7 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-sky-600 hover:from-indigo-500 hover:to-sky-500 text-white font-semibold text-sm sm:text-base shadow-lg shadow-indigo-600/25 transition shrink-0 hover:scale-[1.02]"
+          class="px-7 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-sky-600 hover:from-indigo-500 hover:to-sky-500 text-white font-semibold text-sm sm:text-base shadow-lg shadow-indigo-600/25 transition shrink-0"
         >
-          Search Index
+          Search Directory
         </button>
         <% if (searchQuery) { %>
           <a
@@ -229,129 +214,265 @@
           </a>
         <% } %>
       </form>
-
-      <!-- Quick Filter Pills -->
-      <div class="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs">
-        <button type="button" onclick="filterByKeyword('')" class="px-3.5 py-1.5 rounded-full bg-white/80 dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:border-indigo-500 dark:hover:border-indigo-400 transition font-semibold shadow-sm">
-          All Topics (<%= pages.length %>)
-        </button>
-        <button type="button" onclick="filterByKeyword('ai')" class="px-3.5 py-1.5 rounded-full bg-white/70 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-indigo-500 dark:hover:border-indigo-400 transition">
-          AI &amp; LLM Engineering
-        </button>
-        <button type="button" onclick="filterByKeyword('salary')" class="px-3.5 py-1.5 rounded-full bg-white/70 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-indigo-500 dark:hover:border-indigo-400 transition">
-          Tech Salaries
-        </button>
-        <button type="button" onclick="filterByKeyword('cloud')" class="px-3.5 py-1.5 rounded-full bg-white/70 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-indigo-500 dark:hover:border-indigo-400 transition">
-          Cloud &amp; Kubernetes
-        </button>
-        <button type="button" onclick="filterByKeyword('fintech')" class="px-3.5 py-1.5 rounded-full bg-white/70 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-indigo-500 dark:hover:border-indigo-400 transition">
-          Fintech &amp; Payments
-        </button>
-        <button type="button" onclick="filterByKeyword('postgresql')" class="px-3.5 py-1.5 rounded-full bg-white/70 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-indigo-500 dark:hover:border-indigo-400 transition">
-          Databases &amp; SQL
-        </button>
-        <button type="button" onclick="filterByKeyword('san francisco')" class="px-3.5 py-1.5 rounded-full bg-white/70 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-indigo-500 dark:hover:border-indigo-400 transition">
-          San Francisco
-        </button>
-      </div>
     </div>
   </section>
 
-  <!-- Main Content Container -->
-  <main class="relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <!-- Main Content -->
+  <main class="relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
     <% if (typeof notFoundSlug !== 'undefined' && notFoundSlug) { %>
-      <div class="mb-8 rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 text-amber-800 dark:text-amber-200 flex items-center justify-between">
+      <div class="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 text-amber-800 dark:text-amber-200 flex items-center justify-between">
         <div>
           <p class="font-semibold text-xs uppercase tracking-wider text-amber-600 dark:text-amber-400">Report Not Found (404)</p>
-          <p class="mt-1 text-sm">We couldn't find a guide matching <code class="px-1.5 py-0.5 rounded bg-amber-500/20 font-mono text-xs">/<%= notFoundSlug %></code>. Browse all verified reports below.</p>
+          <p class="mt-1 text-sm">We couldn't find a report matching <code class="px-1.5 py-0.5 rounded bg-amber-500/20 font-mono text-xs">/<%= notFoundSlug %></code>. Explore our curated category hubs below.</p>
         </div>
         <a href="/" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 transition">Dismiss</a>
       </div>
     <% } %>
 
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200/80 dark:border-slate-800/80">
-      <div>
-        <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
-          <% if (searchQuery) { %>
-            Search Results for "<%= searchQuery %>"
-          <% } else { %>
-            Verified Engineering, AI &amp; Compensation Guides
-          <% } %>
-        </h2>
-        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
-          Showing <span id="visibleCountLabel" class="font-semibold text-indigo-600 dark:text-indigo-400"><%= pages.length %></span> comprehensive programmatic reports with structured FAQ schema
-        </p>
-      </div>
-    </div>
+    <!-- 1. Curated Category Hubs -->
+    <% if (!searchQuery && typeof categories !== 'undefined' && categories.length > 0) { %>
+      <section id="categories-hub" class="scroll-mt-20">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">Structured Knowledge Clusters</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-1">
+              Explore by Technical &amp; Career Domain
+            </h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+            Click any domain cluster to filter reports instantly
+          </p>
+        </div>
 
-    <% if (pages.length === 0) { %>
-      <div class="mt-12 spotlight-card rounded-2xl p-12 text-center">
-        <h3 class="text-lg font-bold text-slate-900 dark:text-white">No Matching Guides Found</h3>
-        <p class="mt-2 text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto">
-          Try clearing your search query or selecting a different category above.
-        </p>
-      </div>
-    <% } else { %>
-      <div id="cardsGrid" class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <% pages.forEach(function(item) { %>
-          <article
-            data-search="<%= (item.title + ' ' + item.slug + ' ' + item.description).toLowerCase() %>"
-            class="directory-card spotlight-card group rounded-2xl p-6 hover:-translate-y-1.5 flex flex-col justify-between"
-          >
-            <div>
-              <div class="flex items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400 mb-3">
-                <span class="font-mono bg-slate-100 dark:bg-slate-900/90 text-indigo-600 dark:text-indigo-300 border border-slate-200/80 dark:border-slate-800 px-2.5 py-1 rounded-lg truncate max-w-[220px]">
-                  /<%= item.slug %>
-                </span>
-                <time datetime="<%= item.created_at %>" class="shrink-0 text-slate-400 dark:text-slate-500">
-                  <%= item.created_at ? item.created_at.split(' ')[0] : '2026' %>
-                </time>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <% categories.forEach(function(cat) { %>
+            <button
+              type="button"
+              onclick="filterByKeyword('<%= cat.name.toLowerCase() %>'); document.getElementById('directory-index').scrollIntoView({behavior: 'smooth'});"
+              class="text-left spotlight-card rounded-2xl p-6 hover:-translate-y-1 transition flex flex-col justify-between group"
+            >
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-3">
+                  <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/10 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300 border border-indigo-500/25">
+                    <%= cat.name %>
+                  </span>
+                  <span class="text-xs font-mono font-semibold text-slate-500 dark:text-slate-400">
+                    <%= cat.count %> Guides
+                  </span>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  <%= cat.description %>
+                </p>
               </div>
-
-              <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition leading-snug">
-                <a href="/<%= item.slug %>" class="focus:outline-none">
-                  <span class="absolute inset-0" aria-hidden="true"></span>
-                  <%= item.title %>
-                </a>
-              </h3>
-
-              <p class="mt-3 text-sm text-slate-600 dark:text-slate-300/90 line-clamp-3 leading-relaxed">
-                <%= item.description.replace(/\n+/g, ' ').slice(0, 195) %>...
-              </p>
-            </div>
-
-            <div class="mt-6 pt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between text-xs font-semibold">
-              <span class="inline-flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400"></span>
-                <%= item.faqs ? item.faqs.length : 3 %> Structured FAQs
+              <span class="mt-4 text-xs font-semibold text-indigo-600 dark:text-indigo-400 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                Filter <%= cat.name %> cluster &rarr;
               </span>
-              <span class="text-indigo-600 dark:text-indigo-400 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
-                Read Guide &rarr;
-              </span>
-            </div>
-          </article>
-        <% }); %>
-      </div>
+            </button>
+          <% }); %>
+        </div>
+      </section>
     <% } %>
 
-    <!-- Editorial Methodology & AdSense Transparency Section -->
-    <section class="mt-16 spotlight-card rounded-2xl p-8 sm:p-10">
+    <!-- 2. Featured Pillar Blueprints -->
+    <% if (!searchQuery && typeof featuredPages !== 'undefined' && featuredPages.length > 0) { %>
+      <section>
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">Editor's Pillar Selections</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-1">
+              Flagship 2026 Architecture &amp; Salary Guides
+            </h2>
+          </div>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Includes 4-Phase Blueprints, Comparison Tables &amp; Trade-Offs</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <% featuredPages.forEach(function(fp) { %>
+            <article class="spotlight-card rounded-2xl p-6 border-indigo-500/30 hover:-translate-y-1.5 transition flex flex-col justify-between group">
+              <div>
+                <div class="flex items-center justify-between gap-2 text-xs mb-3">
+                  <span class="px-2.5 py-1 rounded-md bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-bold uppercase tracking-wider">
+                    ★ Pillar Guide &bull; <%= fp.category %>
+                  </span>
+                </div>
+                <h3 class="text-lg font-extrabold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition leading-snug">
+                  <a href="/<%= fp.slug %>">
+                    <span class="absolute inset-0" aria-hidden="true"></span>
+                    <%= fp.title %>
+                  </a>
+                </h3>
+                <% if (fp.meta && fp.meta.kpis && fp.meta.kpis[0]) { %>
+                  <div class="mt-3 p-2.5 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-xs font-semibold text-indigo-800 dark:text-indigo-200">
+                    Benchmark: <%= fp.meta.kpis[0].value %>
+                  </div>
+                <% } %>
+                <p class="mt-3 text-sm text-slate-600 dark:text-slate-300 line-clamp-3 leading-relaxed">
+                  <%= (fp.meta && fp.meta.overview_paragraphs && fp.meta.overview_paragraphs[0] ? fp.meta.overview_paragraphs[0] : fp.description).slice(0, 180) %>...
+                </p>
+              </div>
+              <div class="mt-5 pt-4 border-t border-slate-200/70 dark:border-slate-800 flex items-center justify-between text-xs font-semibold">
+                <span class="text-slate-500 dark:text-slate-400"><%= fp.city %></span>
+                <span class="text-indigo-600 dark:text-indigo-400">Open Full Blueprint &rarr;</span>
+              </div>
+            </article>
+          <% }); %>
+        </div>
+      </section>
+    <% } %>
+
+    <!-- 3. Interactive Compensation & Take-Home Pay Sandbox -->
+    <section id="interactive-estimator" class="spotlight-card rounded-2xl p-6 sm:p-10 scroll-mt-20">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">Interactive Benchmarking Utility</span>
+          <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">
+            2026 Tech Total Comp &amp; Purchasing Power Calculator
+          </h2>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+            Compare nominal coastal compensation packages against zero-income-tax hubs (Austin, Seattle) by modeling base salary, target bonus, 4-year RSU grants, and effective tax rates.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="homeBase" class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Base Salary ($)</label>
+            <input id="homeBase" type="number" value="185000" step="5000" oninput="runHomeCalc()" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm font-semibold" />
+          </div>
+          <div>
+            <label for="homeBonus" class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Annual Bonus (%)</label>
+            <input id="homeBonus" type="number" value="15" step="1" oninput="runHomeCalc()" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm font-semibold" />
+          </div>
+          <div>
+            <label for="homeRsu" class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">4-Yr RSU Grant ($)</label>
+            <input id="homeRsu" type="number" value="240000" step="10000" oninput="runHomeCalc()" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm font-semibold" />
+          </div>
+          <div>
+            <label for="homeHubTax" class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Tech Hub Tax Tier</label>
+            <select id="homeHubTax" onchange="runHomeCalc()" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm font-semibold">
+              <option value="36">San Francisco / CA (~36% Eff.)</option>
+              <option value="37">New York City / NY (~37% Eff.)</option>
+              <option value="25">Seattle / WA (0% State, ~25% Eff.)</option>
+              <option value="25">Austin / TX (0% State, ~25% Eff.)</option>
+              <option value="29">Boston / MA (~29% Eff.)</option>
+              <option value="28">Denver / CO (~28% Eff.)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-gradient-to-br from-indigo-600/15 via-sky-500/10 to-emerald-500/10 border border-indigo-500/30 space-y-3">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Annual Total Comp (TC)</span>
+            <p id="homeOutTC" class="text-3xl font-extrabold text-indigo-600 dark:text-indigo-300">$272,750</p>
+          </div>
+          <div class="pt-3 border-t border-slate-200/60 dark:border-slate-800">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Estimated Net Take-Home</span>
+            <p id="homeOutNet" class="text-xl font-bold text-emerald-600 dark:text-emerald-400">$174,560 / yr</p>
+            <p id="homeOutMo" class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">~$14,547 / month after tax</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Complete Filterable Directory Index -->
+    <section id="directory-index" class="scroll-mt-20">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200/80 dark:border-slate-800/80">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+            <% if (searchQuery) { %>
+              Search Results for "<%= searchQuery %>"
+            <% } else { %>
+              Complete Technical &amp; Compensation Report Index
+            <% } %>
+          </h2>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+            Showing <span id="visibleCountLabel" class="font-semibold text-indigo-600 dark:text-indigo-400"><%= pages.length %></span> comprehensive guides with comparison matrices &amp; structured FAQs
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onclick="filterByKeyword('')"
+          class="text-xs font-semibold px-3.5 py-2 rounded-xl bg-slate-200/80 dark:bg-slate-900 hover:bg-indigo-600 hover:text-white transition self-start sm:self-auto"
+        >
+          Show All <%= pages.length %> Guides
+        </button>
+      </div>
+
+      <% if (pages.length === 0) { %>
+        <div class="mt-12 spotlight-card rounded-2xl p-12 text-center">
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">No Matching Guides Found</h3>
+          <p class="mt-2 text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+            Try clearing your search filter or selecting one of the domain clusters above.
+          </p>
+        </div>
+      <% } else { %>
+        <div id="cardsGrid" class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <% pages.forEach(function(item) { %>
+            <article
+              data-search="<%= (item.title + ' ' + item.slug + ' ' + item.category + ' ' + item.city + ' ' + item.description).toLowerCase() %>"
+              class="directory-card spotlight-card group rounded-2xl p-6 hover:-translate-y-1.5 flex flex-col justify-between"
+            >
+              <div>
+                <div class="flex items-center justify-between gap-2 text-xs mb-3">
+                  <span class="px-2.5 py-1 rounded-md font-bold bg-indigo-500/10 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300 border border-indigo-500/20">
+                    <%= item.category %>
+                  </span>
+                  <span class="text-slate-500 dark:text-slate-400 font-medium truncate">
+                    <%= item.city %>
+                  </span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition leading-snug">
+                  <a href="/<%= item.slug %>" class="focus:outline-none">
+                    <span class="absolute inset-0" aria-hidden="true"></span>
+                    <%= item.title %>
+                  </a>
+                </h3>
+
+                <% if (item.meta && item.meta.kpis && item.meta.kpis[0]) { %>
+                  <p class="mt-2.5 text-xs font-semibold text-emerald-700 dark:text-emerald-400">
+                    ▸ <%= item.meta.kpis[0].value %>
+                  </p>
+                <% } %>
+
+                <p class="mt-2.5 text-sm text-slate-600 dark:text-slate-300/90 line-clamp-3 leading-relaxed">
+                  <%= (item.meta && item.meta.overview_paragraphs && item.meta.overview_paragraphs[0] ? item.meta.overview_paragraphs[0] : item.description).replace(/\n+/g, ' ').slice(0, 185) %>...
+                </p>
+              </div>
+
+              <div class="mt-6 pt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between text-xs font-semibold">
+                <span class="inline-flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400"></span>
+                  4-Phase Blueprint + Matrix
+                </span>
+                <span class="text-indigo-600 dark:text-indigo-400 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                  Read Guide &rarr;
+                </span>
+              </div>
+            </article>
+          <% }); %>
+        </div>
+      <% } %>
+    </section>
+
+    <!-- Editorial Standards & Transparency Section -->
+    <section class="spotlight-card rounded-2xl p-8 sm:p-10">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
         <div class="lg:col-span-2 space-y-3">
-          <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">Editorial Standards &amp; Methodology</span>
+          <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">Editorial Quality &amp; Data Integrity</span>
           <h2 class="text-2xl font-bold text-slate-900 dark:text-white">
-            Built for Engineering Leaders, Developers &amp; Career Benchmarking
+            How TechPay Directory Curates &amp; Verifies Benchmarks
           </h2>
           <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-            <strong>TechPay Index</strong> combines regional compensation data, enterprise architecture benchmarks, and structured technical guides across AI engineering, DevOps automation, cloud FinOps, and database scalability. Every report is vetted for clarity, original analysis, and structured Schema.org metadata.
+            Every guide in <strong>TechPay Directory</strong> is structured to provide actionable utility for software engineers, architects, and hiring managers. Our reports combine empirical systems performance metrics, 4-stage implementation roadmaps, comparative trade-off tables, and localized tax/cost-of-living adjustments across 8 major technology hubs.
           </p>
         </div>
         <div class="flex flex-col sm:flex-row lg:flex-col gap-3">
           <a href="/about" class="px-5 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-sky-600 hover:from-indigo-500 hover:to-sky-500 text-white font-semibold text-sm text-center shadow-md transition">
-            Explore Our Methodology &rarr;
+            Read Our Editorial Policy &rarr;
           </a>
           <a href="/contact" class="px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 font-semibold text-sm text-center transition">
-            Contact Editorial Team
+            Submit Data or Feedback
           </a>
         </div>
       </div>
@@ -373,7 +494,6 @@
   </footer>
 
   <script>
-    // 1. Theme Switcher (Dark & Light Mode with localStorage persistence)
     function updateThemeUI() {
       const isDark = document.documentElement.classList.contains('dark');
       const label = document.getElementById('themeToggleLabel');
@@ -390,7 +510,22 @@
     }
     updateThemeUI();
 
-    // 2. Interactive Mouse-Tracking Global Spotlight & Card Glow
+    function runHomeCalc() {
+      const base = parseFloat(document.getElementById('homeBase').value) || 0;
+      const bonusPct = parseFloat(document.getElementById('homeBonus').value) || 0;
+      const rsuFour = parseFloat(document.getElementById('homeRsu').value) || 0;
+      const taxRate = parseFloat(document.getElementById('homeHubTax').value) || 30;
+
+      const gross = Math.round(base + base * (bonusPct / 100) + rsuFour / 4);
+      const net = Math.round(gross * (1 - taxRate / 100));
+      const mo = Math.round(net / 12);
+
+      document.getElementById('homeOutTC').textContent = '$' + gross.toLocaleString();
+      document.getElementById('homeOutNet').textContent = '$' + net.toLocaleString() + ' / yr';
+      document.getElementById('homeOutMo').textContent = '~$' + mo.toLocaleString() + ' / month after tax';
+    }
+    runHomeCalc();
+
     window.addEventListener('mousemove', (e) => {
       document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
       document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
@@ -404,7 +539,6 @@
       }, { passive: true });
     });
 
-    // 3. Instant Client-Side Search & Pill Filtering
     const searchInput = document.getElementById('liveSearchInput');
     const cards = Array.from(document.querySelectorAll('.directory-card'));
     const countLabel = document.getElementById('visibleCountLabel');
@@ -429,8 +563,8 @@
     function filterByKeyword(keyword) {
       if (searchInput) {
         searchInput.value = keyword;
-        applyClientFilter(keyword);
       }
+      applyClientFilter(keyword);
     }
 
     if (searchInput) {
